@@ -1,0 +1,140 @@
+import React, { useEffect, useState, useTransition, useOptimistic } from "react";
+import Topnav from "../../Component/Topnav";
+import { baseUrl } from "../../Api/Baseurl";
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+import {  postwithheader, putWithoutHeader ,getWithoutHeader } from "../../Api/Api";
+
+const CreateUserType = () => {
+  const [title, setTitle] = useState("");
+  const [data, setData] = useState([]);
+  const [editId, setEditId] = useState("");
+  const [isPending, startTransition] = useTransition();
+  const [optimisticData, setOptimisticData] = useOptimistic(data);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const obj = { title };
+
+    try {
+      if (editId) {
+        await putWithoutHeader(`user_type/${editId}`, obj);
+      } else {
+        await postwithheader("user_type", obj);
+      }
+
+      startTransition(() => handleGet());
+      setTitle("");
+      setEditId("");
+    } catch (error) {
+      console.error("Error submitting:", error);
+    }
+  };
+
+  const handleGet = async () => {
+    try {
+      const result = await getWithoutHeader("user_type");
+      if (result && result.data) {
+        setData(result.data);
+        setOptimisticData(result.data); 
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleGet();
+  }, []);
+
+  const handleEdit = (id) => {
+    setEditId(id);
+    const found = data.find((itm) => itm._id === id);
+    if (found) {
+      setTitle(found.title);
+    } else {
+      console.log("Item not found");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`${baseUrl}user_type/${id}`, { method: "DELETE" });
+      startTransition(() => handleGet());
+    } catch (error) {
+      console.error("Error deleting:", error);
+    }
+  };
+
+  return (
+    <>
+      <Topnav />
+      <section>
+        <div className="container">
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-3 mt-3 gap-3 items-center">
+              <div className="col-span-1">
+                <label className="block text-[#001B48] font-bold mb-2">
+                  Title
+                </label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
+                  placeholder="Enter title"
+                  required
+                />
+              </div>
+              <div className="col-span-1 mt-6">
+                <button
+                  type="submit"
+                  disabled={isPending}
+                  className={`py-2 px-4 rounded text-white ${isPending ? "bg-gray-400" : "bg-[#001B48]"}`}
+                >
+                  {editId ? "Update" : "Submit"}
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div className="grid grid-cols-1 mt-3">
+            <table className="w-full border-separate border-spacing-y-1">
+              <thead>
+                <tr className="*:text-start *:text-nowrap *:text-sm *:font-bold bg-[#FAFAFA] *:px-[1rem] *:py-[1rem] *:tracking-[0.5px] *:border-r *:border-gray-100 ">
+                  <th>Title</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {optimisticData.map((itm) => (
+                  <tr key={itm._id} className="*:text-start *:text-[13px] *:font-[400] bg-[#FFFFFF] *:px-[1rem] *:py-[0.5rem] *:tracking-[0.5px] *:border-r *:text-nowrap *:border-gray-100">
+                    <td>{itm.title}</td>
+                    <td>
+                      <div className="flex gap-3 item-center">
+                        <button
+                          className="edit mt-[2px] p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
+                          onClick={() => handleEdit(itm._id)}
+                        >
+                          <FaEdit />
+                        </button>
+                        <button
+                          className="edit mt-[2px] p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
+                          onClick={() => handleDelete(itm._id)}
+                        >
+                          <MdDelete />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default CreateUserType;
