@@ -3,7 +3,7 @@ import Topnav from "../../Component/Topnav";
 import { baseUrl } from "../../Api/Baseurl";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import {  postwithheader, putWithoutHeader ,getWithoutHeader } from "../../Api/Api";
+import { postwithheader, putWithoutHeader, getWithoutHeader } from "../../Api/Api";
 
 const CreateUserType = () => {
   const [title, setTitle] = useState("");
@@ -11,35 +11,21 @@ const CreateUserType = () => {
   const [editId, setEditId] = useState("");
   const [isPending, startTransition] = useTransition();
   const [optimisticData, setOptimisticData] = useOptimistic(data);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const obj = { title };
-
-    try {
-      if (editId) {
-        await putWithoutHeader(`user_type/${editId}`, obj);
-      } else {
-        await postwithheader("user_type", obj);
-      }
-
-      startTransition(() => handleGet());
-      setTitle("");
-      setEditId("");
-    } catch (error) {
-      console.error("Error submitting:", error);
-    }
-  };
-
+  // Fetch data
   const handleGet = async () => {
+    setLoading(true);
     try {
       const result = await getWithoutHeader("user_type");
-      if (result && result.data) {
+      if (result?.data) {
         setData(result.data);
-        setOptimisticData(result.data); 
+        startTransition(() => setOptimisticData(result.data))
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,22 +33,59 @@ const CreateUserType = () => {
     handleGet();
   }, []);
 
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const obj = { title };
+
+    // Optimistic update for instant UI response
+    const tempId = Date.now();
+    const tempData = { _id: tempId, title };
+
+    startTransition(() => setOptimisticData((prev) => (editId ? prev.map(item => item._id === editId ? tempData : item) : [...prev, tempData])))
+
+    try {
+      let response;
+      if (editId) {
+        response = await putWithoutHeader(`user_type/${editId}`, obj);
+      } else {
+        response = await postwithheader("user_type", obj);
+
+      }
+
+      if (response.error == 0) {
+        startTransition(() => handleGet());
+        setTitle("");
+        setEditId("");
+      }
+    } catch (error) {
+      console.error("Error submitting:", error);
+      startTransition(() => setOptimisticData(data)) // Rollback UI if error occurs
+    }
+  };
+
+  // Handle edit
   const handleEdit = (id) => {
     setEditId(id);
     const found = data.find((itm) => itm._id === id);
     if (found) {
       setTitle(found.title);
-    } else {
-      console.log("Item not found");
     }
   };
 
+  // Handle delete with optimistic update
   const handleDelete = async (id) => {
+    const previousData = optimisticData;
+
+    // Optimistic remove from UI
+    setOptimisticData((prev) => prev.filter((itm) => itm._id !== id));
+
     try {
       await fetch(`${baseUrl}user_type/${id}`, { method: "DELETE" });
       startTransition(() => handleGet());
     } catch (error) {
       console.error("Error deleting:", error);
+      startTransition(() => setOptimisticData(previousData)) // Rollback on error
     }
   };
 
@@ -74,9 +97,7 @@ const CreateUserType = () => {
           <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-3 mt-3 gap-3 items-center">
               <div className="col-span-1">
-                <label className="block text-[#001B48] font-bold mb-2">
-                  Title
-                </label>
+                <label className="block text-[#001B48] font-bold mb-2">Title</label>
                 <input
                   type="text"
                   value={title}
@@ -98,39 +119,48 @@ const CreateUserType = () => {
             </div>
           </form>
 
-          <div className="grid grid-cols-1 mt-3">
-            <table className="w-full border-separate border-spacing-y-1">
-              <thead>
-                <tr className="*:text-start *:text-nowrap *:text-sm *:font-bold bg-[#FAFAFA] *:px-[1rem] *:py-[1rem] *:tracking-[0.5px] *:border-r *:border-gray-100 ">
-                  <th>Title</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {optimisticData.map((itm) => (
-                  <tr key={itm._id} className="*:text-start *:text-[13px] *:font-[400] bg-[#FFFFFF] *:px-[1rem] *:py-[0.5rem] *:tracking-[0.5px] *:border-r *:text-nowrap *:border-gray-100">
-                    <td>{itm.title}</td>
-                    <td>
-                      <div className="flex gap-3 item-center">
-                        <button
-                          className="edit mt-[2px] p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
-                          onClick={() => handleEdit(itm._id)}
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          className="edit mt-[2px] p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
-                          onClick={() => handleDelete(itm._id)}
-                        >
-                          <MdDelete />
-                        </button>
-                      </div>
-                    </td>
+          {/* Loader */}
+          {loading && (
+            <div className="text-center py-4">
+              <span className="text-[#001B48] font-semibold">Loading...</span>
+            </div>
+          )}
+
+          {!loading && (
+            <div className="grid grid-cols-1 mt-3">
+              <table className="w-full border-separate border-spacing-y-1">
+                <thead>
+                  <tr className="*:text-start *:text-nowrap *:text-sm *:font-bold bg-[#FAFAFA] *:px-[1rem] *:py-[1rem] *:tracking-[0.5px] *:border-r *:border-gray-100 ">
+                    <th>Title</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {optimisticData.map((itm) => (
+                    <tr key={itm._id} className="*:text-start *:text-[13px] *:font-[400] bg-[#FFFFFF] *:px-[1rem] *:py-[0.5rem] *:tracking-[0.5px] *:border-r *:text-nowrap *:border-gray-100">
+                      <td>{itm.title}</td>
+                      <td>
+                        <div className="flex gap-3 item-center">
+                          <button
+                            className="edit mt-[2px] p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
+                            onClick={() => handleEdit(itm._id)}
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            className="edit mt-[2px] p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
+                            onClick={() => handleDelete(itm._id)}
+                          >
+                            <MdDelete />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </section>
     </>
