@@ -4,6 +4,7 @@ import { baseUrl } from "../../Api/Baseurl";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { postwithheader, putWithoutHeader, getWithoutHeader } from "../../Api/Api";
+import { toast } from "react-toastify";
 
 const CreateUserType = () => {
   const [title, setTitle] = useState("");
@@ -48,8 +49,10 @@ const CreateUserType = () => {
       let response;
       if (editId) {
         response = await putWithoutHeader(`user_type/${editId}`, obj);
+        toast.success("usertype update successfully!");
       } else {
         response = await postwithheader("user_type", obj);
+        toast.success("usertype add successfully!");
 
       }
 
@@ -60,7 +63,8 @@ const CreateUserType = () => {
       }
     } catch (error) {
       console.error("Error submitting:", error);
-      startTransition(() => setOptimisticData(data)) // Rollback UI if error occurs
+      startTransition(() => setOptimisticData(data))
+      toast.error(`${error.message}`);
     }
   };
 
@@ -73,19 +77,19 @@ const CreateUserType = () => {
     }
   };
 
-  // Handle delete with optimistic update
   const handleDelete = async (id) => {
     const previousData = optimisticData;
 
-    // Optimistic remove from UI
+
     setOptimisticData((prev) => prev.filter((itm) => itm._id !== id));
 
     try {
       await fetch(`${baseUrl}user_type/${id}`, { method: "DELETE" });
       startTransition(() => handleGet());
+      toast.success("usertype delete successfully!");
     } catch (error) {
       console.error("Error deleting:", error);
-      startTransition(() => setOptimisticData(previousData)) // Rollback on error
+      startTransition(() => setOptimisticData(previousData))
     }
   };
 

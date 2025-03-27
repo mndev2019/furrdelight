@@ -85,6 +85,23 @@ export const getWithoutHeader = async (endpoint) => {
         return { error: 1, message: "Request failed" };
     }
 };
+// PUT API with headers
+export const putwithformdata = async (endpoint, formdata, token) => {
+    try {
+        const response = await fetch(`${baseUrl}${endpoint}`, {
+            method: "PUT",
+            body: formdata, // Use FormData directly
+            headers: token ? { Authorization: `Bearer ${token}` } : {}, // Only add Authorization if token is provided
+        });
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("API Error:", error);
+        return { error: 1, message: "Request failed" };
+    }
+};
+
 
 // PUT API with headers
 export const putwithheader = async (endpoint, formdata, token) => {

@@ -2,17 +2,18 @@
 
 import React, { useEffect, useState, useTransition } from 'react';
 import Topnav from '../../Component/Topnav';
-import { deleteapi, getWithoutHeader, Postwithformdata } from '../../Api/Api';
+import { deleteapi, getWithoutHeader, Postwithformdata, putwithformdata} from '../../Api/Api';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { baseUrl } from '../../Api/Baseurl';
 import Loader from '../../Component/Loader';
 import { toast } from 'react-toastify';
 
-const Banner = () => {
+const Brand = () => {
     const [image, setImage] = useState(null);
     const [title, setTitle] = useState('');
     const [data, setData] = useState([]);
+    const [editid, seteditid] = useState("");
     const [isPending, startTransition] = useTransition();
 
     const handleFile = (e) => {
@@ -27,28 +28,36 @@ const Banner = () => {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('image', image);
-
         try {
-            const response = await Postwithformdata('create_banner', formData);
-            toast.success("banner add successfully!");
+            let response;
+            if (editid) {
+                response = await putwithformdata(`update_brand/${editid}`, formData);
+                console.log(response)
+                toast.success("brand update successfully!!");
+            } else {
+                response = await Postwithformdata("brand", formData);
+                console.log(response)
+                toast.success("brand add successfully!!");
 
-            if (response && response.error == 0) {
-                // Only update the UI if the API succeeds
-                setData((prevData) => [...prevData, response.data]);
-                setTitle('');
-                setImage(null);
+            }
+
+            if (response.error == 0) {
+                fetchBrand();
+                setTitle("");
+                seteditid("");
+                setImage("");
             }
         } catch (error) {
-            console.error('Error submitting:', error);
-            alert("Failed to submit. Please try again.");
-            toast.error(`${error.message}`);
+            console.error("Error submitting:", error);
+            toast.error(`${error.message}`);                       
         }
+
     };
 
 
-    const fetchBanners = async () => {
+    const fetchBrand = async () => {
         try {
-            const response = await getWithoutHeader('banner');
+            const response = await getWithoutHeader('brand');
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -56,14 +65,26 @@ const Banner = () => {
     };
 
     useEffect(() => {
-        startTransition(fetchBanners);
+        startTransition(fetchBrand);
     }, []);
 
+    const handledit = (id) => {
+        seteditid(id);
+        const found = data.find(item => item._id == id);
+
+
+        if (found) {
+            setTitle(found.title);
+            setImage(found.image);
+        } else {
+            console.error('Item not found');
+        }
+    }
     const handleDelete = async (id) => {
         try {
-            await deleteapi(`banner_delete/${id}`);
+            await deleteapi(`delete_brand/${id}`);
             setData((prevData) => prevData.filter((item) => item._id !== id));
-            toast.success("banner delete successfully!");
+            toast.success("brand deleted successfully!!");
         } catch (error) {
             console.error('Error deleting:', error);
         }
@@ -94,12 +115,12 @@ const Banner = () => {
                                     type="file"
                                     onChange={handleFile}
                                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
-                                    required
+
                                 />
                             </div>
                             <div className="col-span-1 mt-6">
-                                <button type="submit" className="py-2 px-4 rounded text-white bg-[#001B48]" disabled={isPending}>
-                                    {isPending ? 'Processing...' : 'Submit'}
+                                <button type="submit" className="py-2 px-4 rounded text-white bg-[#001B48] " disabled={isPending} >
+                                  {isPending ?"processing...": "submit"}
                                 </button>
                             </div>
                         </div>
@@ -122,7 +143,7 @@ const Banner = () => {
                                         </td>
                                         <td>
                                             <div className="flex gap-3 item-center">
-                                                <button className="p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white">
+                                                <button className="p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white" onClick={() => handledit(item._id)}>
                                                     <FaEdit />
                                                 </button>
                                                 <button
@@ -144,4 +165,4 @@ const Banner = () => {
     );
 };
 
-export default Banner;
+export default Brand;

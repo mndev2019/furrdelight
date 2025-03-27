@@ -4,6 +4,9 @@ import logo from '../assets/Image/logo.svg'
 
 import { FaUserPen, FaUsers } from 'react-icons/fa6';
 import { Link, useLocation } from 'react-router-dom';
+import { AiOutlineAlignLeft } from 'react-icons/ai';
+import { MdOutlineFitScreen } from 'react-icons/md';
+import { TbLabelFilled } from 'react-icons/tb';
 
 const Sidebar = () => {
     const [open, setopen] = useState(true);
@@ -17,18 +20,20 @@ const Sidebar = () => {
         },
         {
             title: "Banner",
-            image: <FaUserPen />,
+            image: <AiOutlineAlignLeft />,
             path: "/banner"
 
         },
         {
-            title: "Dashboard",
-            image: <FaUserPen />,
+            title: "Splash",
+            image: <MdOutlineFitScreen />,
+            path: "/splash",
             gap: "true"
         },
         {
-            title: "Dashboard",
-            image: <FaUserPen />,
+            title: "Brand",
+            image: <TbLabelFilled />,
+            path: "/brand",
 
         },
         {
@@ -74,7 +79,7 @@ const Sidebar = () => {
                                     <Link to={menu.path}>
                                         <li
                                             key={index}
-                                            className={`text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 rounded-md 
+                                            className={`text-gray-300 text-md flex items-center gap-x-4 cursor-pointer p-2 rounded-md 
                                         ${menu.gap ? "mt-9" : "mt-2"} 
                                         ${location.pathname === menu.path ? "bg-[#DEF0FF] text-[#02457A]" : "hover:bg-[#02457A]"}`}
 
