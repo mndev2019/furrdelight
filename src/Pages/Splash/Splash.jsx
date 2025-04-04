@@ -29,7 +29,7 @@ const Splash = () => {
 
         try {
             const response = await Postwithformdata('splash', formData);
-                toast.success("splash add successfully!");
+            toast.success("splash add successfully!");
             if (response && response.error == 0) {
                 // Only update the UI if the API succeeds
                 setData((prevData) => [...prevData, response.data]);
@@ -48,7 +48,7 @@ const Splash = () => {
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
-               toast.error(`${error.message}`);
+            toast.error(`${error.message}`);
         }
     };
 
@@ -59,7 +59,7 @@ const Splash = () => {
         if (confirm('Are you sure you want to delete?')) {
             try {
 
-                const response = await deleteapi(`splash/${id}`);
+                const response = await deleteapi(`delete_splash/${id}`);
                 if (response && response.error === 0) {
                     console.log("Deleted successfully", response);
                     fetchSplash();
