@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FaPaw, FaEye, FaEyeSlash, FaUser, FaLock } from 'react-icons/fa';
-
+import { motion } from 'framer-motion';
 import logo from "../../assets/Image/logo.svg"
 
 const Login = () => {
