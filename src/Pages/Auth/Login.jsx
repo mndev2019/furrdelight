@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react';
 import { FaPaw, FaEye, FaEyeSlash, FaUser, FaLock } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import logo from "../../assets/Image/logo.svg"
+import { postapiwithoutheader } from '../../Api/Api';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -19,11 +23,26 @@ const Login = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Handle login logic here
-        console.log({ email, password, rememberMe });
-    };
+    useEffect(() => {
+        localStorage.clear();
+    }, [])
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        let requestdata = {
+            email: email,
+            password: password,
+        }
+        let res = await postapiwithoutheader(`login`, requestdata)
+        console.log(res.error)
+        if (res.error == 1) {
+            toast.error(res.message)
+        } else {
+            toast.success(res.message)
+            localStorage.setItem("token", res?.token)
+            navigate('/')
+
+        }
+    }
 
     return (
         <div className="min-h-screen bg-[#DEF0FF] flex items-center justify-center p-4">

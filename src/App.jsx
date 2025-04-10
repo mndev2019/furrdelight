@@ -7,6 +7,11 @@ import Splash from './Pages/Splash/Splash'
 import Brand from './Pages/Brand/Brand'
 import { ToastContainer } from 'react-toastify'
 import Login from './Pages/Auth/Login'
+import Petessential from './Pages/Petessential/Petessential'
+import PetType from './Pages/PetType/PetType'
+import PetBreed from './Pages/PetBreed/PetBreed'
+import Profile from './Pages/Profile'
+import Product from './Pages/Product/Product'
 
 function App() {
   const ThemeRoutes = createBrowserRouter(
@@ -17,6 +22,11 @@ function App() {
           <Route path='/banner' element={<Banner />} />
           <Route path='/splash' element={<Splash />} />
           <Route path='/brand' element={<Brand />} />
+          <Route path='/pet-essential' element={<Petessential />} />
+          <Route path='/pet-type' element={<PetType />} />
+          <Route path='/pet-breed' element={<PetBreed />} />
+          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/add-product' element={<Product/>}/>
 
         </Route>
         <Route path='/login' element={<Login />}>

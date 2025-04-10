@@ -1,8 +1,10 @@
 import React from 'react'
 import happy from '../assets/Image/happy.png'
+import { useNavigate } from 'react-router-dom'
 
 
 const Topnav = () => {
+    const navigate = useNavigate();
     return (
         <>
             <nav className="w-full topbarNav bg-nav   bg-white  border-b-1 pb-2 shadow border-[#CBD5E1]">
@@ -16,7 +18,7 @@ const Topnav = () => {
                             </div>
                         </div>
                         <div className="px-5">
-                            <div className="bg-white shadow p-1 rounded-full">
+                            <div className="bg-white shadow p-1 rounded-full" onClick={()=> navigate('/profile')}>
                                 <img src={happy} style={{ height: "50px", width: "50px" }} alt="" />
                             </div>
                         </div>

@@ -3,14 +3,23 @@ import { IoIosArrowBack } from 'react-icons/io'
 import logo from '../assets/Image/logo.svg'
 
 import { FaUserPen, FaUsers } from 'react-icons/fa6';
-import { Link, useLocation } from 'react-router-dom';
-import { AiOutlineAlignLeft } from 'react-icons/ai';
-import { MdOutlineFitScreen } from 'react-icons/md';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AiOutlineAlignLeft, AiOutlineLogout } from 'react-icons/ai';
+import { MdOutlineFitScreen, MdOutlinePets } from 'react-icons/md';
 import { TbLabelFilled } from 'react-icons/tb';
+import { BiSolidCategoryAlt } from 'react-icons/bi';
+import { PiDogFill } from 'react-icons/pi';
+import { FaProductHunt } from 'react-icons/fa';
 
 const Sidebar = () => {
     const [open, setopen] = useState(true);
+
     const location = useLocation();
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.clear();
+        navigate('/login');
+    }
     const menus = [
         {
             title: "User Type",
@@ -28,7 +37,7 @@ const Sidebar = () => {
             title: "Splash",
             image: <MdOutlineFitScreen />,
             path: "/splash",
-            gap: "true"
+            // gap: "true"
         },
         {
             title: "Brand",
@@ -37,20 +46,30 @@ const Sidebar = () => {
 
         },
         {
-            title: "Dashboard",
-            image: <FaUserPen />,
+            title: "Pet Essentials",
+            image: <MdOutlinePets />,
+            path: "/pet-essential"
 
         },
         {
-            title: "Dashboard",
-            image: <FaUserPen />,
+            title: "Pet Type",
+            image: <BiSolidCategoryAlt />,
+            path: "/pet-type"
 
         },
         {
-            title: "Dashboard",
-            image: <FaUserPen />,
-            gap: "true"
+            title: "Pet Breed",
+            image: <PiDogFill />,
+            path: "/pet-breed"
+            // gap: "true"
         },
+        {
+            title: "Add Product",
+            image: <FaProductHunt />,
+            path: "/add-product"
+            // gap: "true"
+        },
+      
 
     ]
     return (
@@ -95,6 +114,13 @@ const Sidebar = () => {
                         }
 
                     </ul>
+                    <div
+                        onClick={handleLogout}
+                        className="text-gray-300 text-md flex items-center gap-x-4 cursor-pointer p-2 mt-6 rounded-md hover:bg-[#02457A] hover:text-white"
+                    >
+                        <span className="text-lg"><AiOutlineLogout /></span>
+                        <span className={`${!open && "hidden"} origin-left duration-200`}>Logout</span>
+                    </div>
                 </div>
             </div>
         </>

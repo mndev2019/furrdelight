@@ -19,11 +19,12 @@ export const postapiwithoutheader = async (endpoint, requestdata) => {
         return { error: 1, message: "Request failed" };
     }
 };
-export const Postwithformdata = async (endpoint, requestdata) => {
+export const Postwithformdata = async (endpoint, requestdata , token) => {
     try {
         const response = await fetch(`${baseUrl}${endpoint}`, {
             method: "POST",
             body: requestdata, // Use FormData directly
+            headers: token ? { Authorization: `Bearer ${token}` } : {}, // Only add Authorization if token is provided
         });
 
         const data = await response.json();
@@ -53,6 +54,7 @@ export const postwithheader = async (endpoint, formdata, token) => {
         return { error: 1, message: "Request failed" };
     }
 };
+
 
 // GET API with headers
 export const getwithheader = async (endpoint, token) => {

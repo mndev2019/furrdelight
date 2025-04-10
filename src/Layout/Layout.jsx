@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Sidebar from './Sidebar'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 const Layout = () => {
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token") ?? null;
+    useEffect(() => {
+        if (token) {
+            navigate('/')
+        } else {
+            navigate('/login');
+        }
+    }, [token, navigate]);
     return (
         <>
             <div className="flex h-screen">
