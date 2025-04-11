@@ -6,7 +6,7 @@ import { FaUserPen, FaUsers } from 'react-icons/fa6';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineAlignLeft, AiOutlineLogout } from 'react-icons/ai';
 import { MdOutlineFitScreen, MdOutlinePets } from 'react-icons/md';
-import { TbLabelFilled } from 'react-icons/tb';
+import { TbCategoryPlus, TbLabelFilled } from 'react-icons/tb';
 import { BiSolidCategoryAlt } from 'react-icons/bi';
 import { PiDogFill } from 'react-icons/pi';
 import { FaProductHunt } from 'react-icons/fa';
@@ -55,6 +55,12 @@ const Sidebar = () => {
             title: "Pet Type",
             image: <BiSolidCategoryAlt />,
             path: "/pet-type"
+
+        },
+        {
+            title: "Pet Category",
+            image: <TbCategoryPlus />,
+            path: "/pet-category"
 
         },
         {

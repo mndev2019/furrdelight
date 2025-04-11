@@ -12,6 +12,7 @@ import PetType from './Pages/PetType/PetType'
 import PetBreed from './Pages/PetBreed/PetBreed'
 import Profile from './Pages/Profile'
 import Product from './Pages/Product/Product'
+import PetCategory from './Pages/PetCategory/PetCategory'
 
 function App() {
   const ThemeRoutes = createBrowserRouter(
@@ -24,6 +25,7 @@ function App() {
           <Route path='/brand' element={<Brand />} />
           <Route path='/pet-essential' element={<Petessential />} />
           <Route path='/pet-type' element={<PetType />} />
+          <Route path='/pet-category' element={<PetCategory/>}/>
           <Route path='/pet-breed' element={<PetBreed />} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/add-product' element={<Product/>}/>
