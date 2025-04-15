@@ -3,10 +3,11 @@ import Topnav from "../../Component/Topnav";
 import { baseUrl } from "../../Api/Baseurl";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { postwithheader, putWithoutHeader, getWithoutHeader } from "../../Api/Api";
+import { postwithheader, putWithoutHeader,getwithheader } from "../../Api/Api";
 import { toast } from "react-toastify";
 
 const CreateUserType = () => {
+  const token = localStorage.getItem("token")
   const [title, setTitle] = useState("");
   const [data, setData] = useState([]);
   const [editId, setEditId] = useState("");
@@ -18,7 +19,7 @@ const CreateUserType = () => {
   const handleGet = async () => {
     setLoading(true);
     try {
-      const result = await getWithoutHeader("user_type");
+      const result = await getwithheader("user_type" , token);
       if (result?.data) {
         setData(result.data);
         startTransition(() => setOptimisticData(result.data))
@@ -77,21 +78,21 @@ const CreateUserType = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    const previousData = optimisticData;
+  // const handleDelete = async (id) => {
+  //   const previousData = optimisticData;
 
 
-    setOptimisticData((prev) => prev.filter((itm) => itm._id !== id));
+  //   setOptimisticData((prev) => prev.filter((itm) => itm._id !== id));
 
-    try {
-      await fetch(`${baseUrl}user_type/${id}`, { method: "DELETE" });
-      startTransition(() => handleGet());
-      toast.success("usertype delete successfully!");
-    } catch (error) {
-      console.error("Error deleting:", error);
-      startTransition(() => setOptimisticData(previousData))
-    }
-  };
+  //   try {
+  //     await fetch(`${baseUrl}user_type/${id}`, { method: "DELETE" });
+  //     startTransition(() => handleGet());
+  //     toast.success("usertype delete successfully!");
+  //   } catch (error) {
+  //     console.error("Error deleting:", error);
+  //     startTransition(() => setOptimisticData(previousData))
+  //   }
+  // };
 
   return (
     <>
@@ -151,12 +152,12 @@ const CreateUserType = () => {
                           >
                             <FaEdit />
                           </button>
-                          <button
+                          {/* <button
                             className="edit mt-[2px] p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
                             onClick={() => handleDelete(itm._id)}
                           >
                             <MdDelete />
-                          </button>
+                          </button> */}
                         </div>
                       </td>
                     </tr>

@@ -6,10 +6,12 @@ import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import Loader from '../../Component/Loader';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 const PetType = () => {
     const token = localStorage.getItem("token")
+    const navigate = useNavigate();
     const [name, setname] = useState("");
     const [image, setimage] = useState("");
     const [data, setData] = useState([]);
@@ -30,16 +32,18 @@ const PetType = () => {
         if (editid) {
             try {
                 const response = await putwithformdata(`pet_type_update/${editid}`, formData, token);
-                toast.success("pet type update successfully!");
-                setData((prevData) =>
+                 setData((prevData) =>
                     prevData.map((item) =>
                         item._id === editid ? response.data : item
                     )
                 );
                 if (response && response.error == 0) {
+                    toast.success("pet type update successfully!");
                     setname('');
                     setimage(null);
 
+                }else{
+                    toast.error(response.message || "Failed to update pet type ")
                 }
             } catch (error) {
                 console.error('Error submitting:', error);
@@ -48,13 +52,15 @@ const PetType = () => {
         } else {
             try {
                 const response = await Postwithformdata('pet_type', formData, token);
-                toast.success("pet type add successfully!");
                 if (response && response.error == 0) {
                     // Only update the UI if the API succeeds
+                    toast.success("pet type add successfully!");
                     setData((prevData) => [...prevData, response.data]);
                     setname('');
                     setimage(null);
                     fetchpetype();
+                }else{
+                    toast.error(response.message || "Failed to add pet type ")
                 }
             } catch (error) {
                 console.error('Error submitting:', error);
@@ -99,6 +105,7 @@ const PetType = () => {
                     fetchpetype();
                 } else {
                     console.error("Error deleting:", response.message);
+                    toast.error(response.message)
                     alert("Failed to delete. Please try again.");
                 }
             } catch (error) {
@@ -150,6 +157,7 @@ const PetType = () => {
                                     <th>Name</th>
                                     <th>Image</th>
                                     <th>Action</th>
+                                    <th>Breed</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -172,6 +180,11 @@ const PetType = () => {
                                                     <MdDelete />
                                                 </button>
                                             </div>
+                                        </td>
+                                        <td>
+                                            <button onClick={() => navigate('/pet-breed')} type="submit" className="py-2 px-4 rounded text-white bg-[#001B48]">
+                                                Breed
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}

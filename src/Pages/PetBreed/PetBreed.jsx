@@ -38,9 +38,14 @@ const PetBreed = () => {
                     )
                 );
                 if (response && response.error == 0) {
+                    toast.success("pet breed update successfully!");
                     setname('');
                     setimage(null);
+                    setPetTypeId('');
+                    fetchpetbreed();
 
+                }else{
+                    toast.error(response.message || "Failed to update pet breed")
                 }
             } catch (error) {
                 console.error('Error submitting:', error);
@@ -49,14 +54,17 @@ const PetBreed = () => {
         } else {
             try {
                 const response = await Postwithformdata('pet_breeds', formData, token);
-                toast.success("pet breed add successfully!");
+                
                 if (response && response.error == 0) {
                     // Only update the UI if the API succeeds
+                    toast.success("pet breed add successfully!");
                     setData((prevData) => [...prevData, response.data]);
                     setname('');
                     setimage(null);
                     setPetTypeId('');
                     fetchpetbreed();
+                }else{
+                    toast.error(response.message || "Failed to add pet breed")
                 }
             } catch (error) {
                 console.error('Error submitting:', error);
@@ -108,6 +116,7 @@ const PetBreed = () => {
                     toast.success(response.message);
                     fetchpetbreed();
                 } else {
+                    toString.error(response.message)
                     console.error("Error deleting:", response.message);
                     alert("Failed to delete. Please try again.");
                 }

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useTransition } from 'react';
 import Topnav from '../../Component/Topnav';
-import { deleteapi, getWithoutHeader, Postwithformdata, putwithformdata} from '../../Api/Api';
+import { deleteapi, getWithoutHeader, Postwithformdata, putwithformdata } from '../../Api/Api';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { baseUrl } from '../../Api/Baseurl';
@@ -33,34 +33,41 @@ const Brand = () => {
             if (editid) {
                 response = await putwithformdata(`update_brand/${editid}`, formData);
                 console.log(response)
-                toast.success("brand update successfully!!");
+                if (response.error == 0) {
+                    toast.success("brand update successfully!!");
+                    fetchBrand();
+                    setTitle("");
+                    seteditid("");
+                    setImage("");
+                } else {
+                    toast.error(response.message)
+                }
+
             } else {
                 response = await Postwithformdata("brand", formData);
                 console.log(response)
-                toast.success("brand add successfully!!");
-
-            }
-
-            if (response.error == 0) {
-                fetchBrand();
-                setTitle("");
-                seteditid("");
-                setImage("");
+                if (response.error == 0) {
+                    toast.success("brand add successfully!!");
+                    fetchBrand();
+                    setTitle("");
+                    seteditid("");
+                    setImage("");
+                } else {
+                    toast.error(response.message)
+                }
             }
         } catch (error) {
             console.error("Error submitting:", error);
-            toast.error(`${error.message}`);                       
+            toast.error(`${error.message}`);
         }
 
     };
-
-
     const fetchBrand = async () => {
         try {
             const response = await getWithoutHeader('brand');
             setData(response.data || []);
         } catch (error) {
-            console.error('Error fetching data:', error);
+            toast.error('Error fetching data:', error);
         }
     };
 
@@ -71,8 +78,6 @@ const Brand = () => {
     const handledit = (id) => {
         seteditid(id);
         const found = data.find(item => item._id == id);
-
-
         if (found) {
             setTitle(found.title);
             setImage(found.image);
@@ -86,7 +91,7 @@ const Brand = () => {
             setData((prevData) => prevData.filter((item) => item._id !== id));
             toast.success("brand deleted successfully!!");
         } catch (error) {
-            console.error('Error deleting:', error);
+            toast.error('Error deleting:', error);
         }
     };
 
@@ -120,7 +125,7 @@ const Brand = () => {
                             </div>
                             <div className="col-span-1 mt-6">
                                 <button type="submit" className="py-2 px-4 rounded text-white bg-[#001B48] " disabled={isPending} >
-                                  {isPending ?"processing...": "submit"}
+                                    {isPending ? "processing..." : "submit"}
                                 </button>
                             </div>
                         </div>

@@ -13,6 +13,11 @@ import PetBreed from './Pages/PetBreed/PetBreed'
 import Profile from './Pages/Profile'
 import Product from './Pages/Product/Product'
 import PetCategory from './Pages/PetCategory/PetCategory'
+import ShopCategory from './Pages/PetCategory/ShopCategory'
+import Unit from './Pages/Unit'
+import AddEvents from './Pages/Events/AddEvents'
+import Productlist from './Pages/Product/Productlist'
+import Productdetail from './Pages/Product/Productdetail'
 
 function App() {
   const ThemeRoutes = createBrowserRouter(
@@ -25,10 +30,15 @@ function App() {
           <Route path='/brand' element={<Brand />} />
           <Route path='/pet-essential' element={<Petessential />} />
           <Route path='/pet-type' element={<PetType />} />
-          <Route path='/pet-category' element={<PetCategory/>}/>
+          <Route path='/pet-category' element={<PetCategory />} />
+          <Route path='/shop-category' element={<ShopCategory />} />
           <Route path='/pet-breed' element={<PetBreed />} />
-          <Route path='/profile' element={<Profile/>}/>
-          <Route path='/add-product' element={<Product/>}/>
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/unit' element={<Unit />} />
+          <Route path='/add-product' element={<Product />} />
+          <Route path='/product-list' element={<Productlist/>}/>
+          <Route path='/product-detail' element={<Productdetail/>}/>
+          <Route path='/add-event' element={<AddEvents/>}/>
 
         </Route>
         <Route path='/login' element={<Login />}>

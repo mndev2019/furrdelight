@@ -5,11 +5,13 @@ import logo from '../assets/Image/logo.svg'
 import { FaUserPen, FaUsers } from 'react-icons/fa6';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineAlignLeft, AiOutlineLogout } from 'react-icons/ai';
-import { MdOutlineFitScreen, MdOutlinePets } from 'react-icons/md';
+import { MdOutlineCategory, MdOutlineFitScreen, MdOutlinePets } from 'react-icons/md';
 import { TbCategoryPlus, TbLabelFilled } from 'react-icons/tb';
 import { BiSolidCategoryAlt } from 'react-icons/bi';
-import { PiDogFill } from 'react-icons/pi';
+import { PiDogFill, PiUniteDuotone } from 'react-icons/pi';
 import { FaProductHunt } from 'react-icons/fa';
+import { CiCircleList } from 'react-icons/ci';
+import { BsFillCalendar3EventFill } from 'react-icons/bs';
 
 const Sidebar = () => {
     const [open, setopen] = useState(true);
@@ -34,7 +36,7 @@ const Sidebar = () => {
 
         },
         {
-            title: "Splash",
+            title: "Intro",
             image: <MdOutlineFitScreen />,
             path: "/splash",
             // gap: "true"
@@ -58,9 +60,15 @@ const Sidebar = () => {
 
         },
         {
-            title: "Pet Category",
+            title: "Pet Categories",
             image: <TbCategoryPlus />,
             path: "/pet-category"
+
+        },
+        {
+            title: "Shop by Category",
+            image: <MdOutlineCategory />,
+            path: "/shop-category"
 
         },
         {
@@ -70,9 +78,27 @@ const Sidebar = () => {
             // gap: "true"
         },
         {
+            title: "Unit",
+            image: <PiUniteDuotone />,
+            path: "/unit"
+            // gap: "true"
+        },
+        {
             title: "Add Product",
             image: <FaProductHunt />,
             path: "/add-product"
+            // gap: "true"
+        },
+        {
+            title: "Product List",
+            image: <CiCircleList />,
+            path: "/product-list"
+            // gap: "true"
+        },
+        {
+            title: "Add Event",
+            image: <BsFillCalendar3EventFill />,
+            path: "/add-event"
             // gap: "true"
         },
       
@@ -81,7 +107,7 @@ const Sidebar = () => {
     return (
         <>
             <div className='flex'>
-                <div className={`${open ? "w-full" : "w-20"} duration-300 p-5 pt-8 h-screen bg-[#001B48] relative`}>
+                <div className={`${open ? "w-full" : "w-20"} duration-300 p-5 pt-8  bg-[#001B48] relative`}>
                     <div
                         className={`h-[35px] w-[35px] bg-white rounded-full text-[20px] flex justify-center items-center border-2 border-[#001B48] absolute cursor-pointer -right-4 top-7 ${!open ? "rotate-180" : ""
                             }`}
@@ -122,7 +148,7 @@ const Sidebar = () => {
                     </ul>
                     <div
                         onClick={handleLogout}
-                        className="text-gray-300 text-md flex items-center gap-x-4 cursor-pointer p-2 mt-6 rounded-md hover:bg-[#02457A] hover:text-white"
+                        className="text-gray-300 text-md flex items-center gap-x-4 cursor-pointer p-2  rounded-md hover:bg-[#02457A] hover:text-white"
                     >
                         <span className="text-lg"><AiOutlineLogout /></span>
                         <span className={`${!open && "hidden"} origin-left duration-200`}>Logout</span>
