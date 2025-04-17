@@ -7,11 +7,14 @@ const Layout = () => {
     const token = localStorage.getItem("token") ?? null;
     useEffect(() => {
         if (token) {
-            navigate('/')
+            window.scrollTo(0, 0);
+            navigate(location.pathname)
         } else {
             navigate('/login');
         }
-    }, [token, navigate]);
+    }, [token]);
+
+
     return (
         <>
             <div className="flex h-screen">

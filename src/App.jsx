@@ -18,6 +18,9 @@ import Unit from './Pages/Unit'
 import AddEvents from './Pages/Events/AddEvents'
 import Productlist from './Pages/Product/Productlist'
 import Productdetail from './Pages/Product/Productdetail'
+import PetFoodType from './Pages/PetFood/PetFoodType'
+import PetFood from './Pages/PetFood/PetFood'
+import PetActivity from './Pages/PetActivity'
 
 function App() {
   const ThemeRoutes = createBrowserRouter(
@@ -36,9 +39,15 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/unit' element={<Unit />} />
           <Route path='/add-product' element={<Product />} />
-          <Route path='/product-list' element={<Productlist/>}/>
-          <Route path='/product-detail' element={<Productdetail/>}/>
-          <Route path='/add-event' element={<AddEvents/>}/>
+          <Route path='/product-list' element={<Productlist />} />
+          <Route path='/product-detail' element={<Productdetail />} />
+          <Route path='/add-event' element={<AddEvents />} />
+          <Route path='/petfood-type' element={<PetFoodType />} />
+          <Route path='/petfood' element={<PetFood />} />
+          <Route path='/pet_activity' element={<PetActivity />} />
+
+
+
 
         </Route>
         <Route path='/login' element={<Login />}>

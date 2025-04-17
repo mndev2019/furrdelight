@@ -15,7 +15,7 @@ const Login = () => {
     const [pawAnimation, setPawAnimation] = useState(false);
 
     useEffect(() => {
-        // Trigger paw animation every 5 seconds
+
         const interval = setInterval(() => {
             setPawAnimation(true);
             setTimeout(() => setPawAnimation(false), 1000);

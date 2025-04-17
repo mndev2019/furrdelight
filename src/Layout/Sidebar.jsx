@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineAlignLeft, AiOutlineLogout } from 'react-icons/ai';
 import { MdOutlineCategory, MdOutlineFitScreen, MdOutlinePets } from 'react-icons/md';
 import { TbCategoryPlus, TbLabelFilled } from 'react-icons/tb';
-import { BiSolidCategoryAlt } from 'react-icons/bi';
+import { BiAccessibility, BiFoodMenu, BiSolidCategoryAlt } from 'react-icons/bi';
 import { PiDogFill, PiUniteDuotone } from 'react-icons/pi';
 import { FaProductHunt } from 'react-icons/fa';
 import { CiCircleList } from 'react-icons/ci';
@@ -101,7 +101,25 @@ const Sidebar = () => {
             path: "/add-event"
             // gap: "true"
         },
-      
+        {
+            title: "Pet Food Type",
+            image: <BiFoodMenu />,
+            path: "/petfood-type"
+            // gap: "true"
+        },
+        {
+            title: "Pet Food",
+            image: <BiFoodMenu />,
+            path: "/petfood"
+            // gap: "true"
+        },
+
+        {
+            title: "Pet Activity",
+            image: <BiAccessibility />,
+            path: "/pet_activity"
+            // gap: "true"
+        },
 
     ]
     return (
