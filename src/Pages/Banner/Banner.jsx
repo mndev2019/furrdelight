@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useTransition } from 'react';
 import Topnav from '../../Component/Topnav';
-import { deleteapi, getWithoutHeader, Postwithformdata } from '../../Api/Api';
+import { deleteapi, getWithoutHeader, Postwithformdata, putwithformdata } from '../../Api/Api';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { baseUrl } from '../../Api/Baseurl';
@@ -14,6 +14,7 @@ const Banner = () => {
     const [title, setTitle] = useState('');
     const [data, setData] = useState([]);
     const [isPending, startTransition] = useTransition();
+    const [editid, seteditid] = useState("");
 
     const handleFile = (e) => {
         const selectedFile = e.target.files[0];
@@ -27,22 +28,44 @@ const Banner = () => {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('image', image);
-
-        try {
-            const response = await Postwithformdata('create_banner', formData);
-            toast.success("banner add successfully!");
-
-            if (response && response.error == 0) {
-                // Only update the UI if the API succeeds
-                setData((prevData) => [...prevData, response.data]);
-                setTitle('');
-                setImage(null);
+        if (editid) {
+            try {
+                const response = await putwithformdata(`banner_update/${editid}`, formData);
+                toast.success("banner update successfully!");
+                if (response && response.error == 0) {
+                    // Only update the UI if the API succeeds
+                    setData((prevData) =>
+                        prevData.map((item) =>
+                            item._id === editid ? { ...item, ...response.data } : item
+                        )
+                    );
+                    setTitle('');
+                    setImage(null);
+                }
+            } catch (error) {
+                console.error('Error submitting:', error);
+                alert("Failed to submit. Please try again.");
+                toast.error(`${error.message}`);
             }
-        } catch (error) {
-            console.error('Error submitting:', error);
-            alert("Failed to submit. Please try again.");
-            toast.error(`${error.message}`);
+        } else {
+            try {
+                const response = await Postwithformdata('create_banner', formData);
+                toast.success("banner add successfully!");
+
+                if (response && response.error == 0) {
+                    // Only update the UI if the API succeeds
+                    setData((prevData) => [...prevData, response.data]);
+                    setTitle('');
+                    setImage(null);
+                }
+            } catch (error) {
+                console.error('Error submitting:', error);
+                alert("Failed to submit. Please try again.");
+                toast.error(`${error.message}`);
+            }
         }
+
+
     };
 
 
@@ -58,6 +81,16 @@ const Banner = () => {
     useEffect(() => {
         startTransition(fetchBanners);
     }, []);
+    const handledit = (id) => {
+        seteditid(id)
+        const found = data.find(item => item._id == id)
+        if (found) {
+            setTitle(found.title);
+            setImage(found.image);
+        } else {
+            console.error('Item not found');
+        }
+    }
 
     const handleDelete = async (id) => {
         try {
@@ -94,7 +127,7 @@ const Banner = () => {
                                     type="file"
                                     onChange={handleFile}
                                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
-                                    required
+
                                 />
                             </div>
                             <div className="col-span-1 mt-6">
@@ -123,7 +156,7 @@ const Banner = () => {
                                         <td>
                                             <div className="flex gap-3 item-center">
                                                 <button className="p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white">
-                                                    <FaEdit />
+                                                    <FaEdit onClick={() => handledit(item._id)} />
                                                 </button>
                                                 <button
                                                     className="p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"

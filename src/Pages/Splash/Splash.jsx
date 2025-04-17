@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useTransition } from 'react'
 import Topnav from '../../Component/Topnav'
-import { deleteapi, getWithoutHeader, Postwithformdata } from '../../Api/Api';
+import { deleteapi, getWithoutHeader, Postwithformdata, putwithformdata } from '../../Api/Api';
 import { baseUrl } from '../../Api/Baseurl';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
@@ -14,6 +14,7 @@ const Splash = () => {
     const [image, setimage] = useState("");
     const [data, setData] = useState([]);
     const [isPending, startTransition] = useTransition();
+    const [editid, seteditid] = useState("");
     const handlefile = (e) => {
         const selectedfile = e.target.files[0];
         setimage(selectedfile);
@@ -26,21 +27,43 @@ const Splash = () => {
         formData.append('title', title);
         formData.append('image', image);
         formData.append('position', position)
-
-        try {
-            const response = await Postwithformdata('splash', formData);
-            toast.success("splash add successfully!");
-            if (response && response.error == 0) {
-                // Only update the UI if the API succeeds
-                setData((prevData) => [...prevData, response.data]);
-                settitle('');
-                setposition('');
-                setimage(null);
+        if (editid) {
+            try {
+                const response = await putwithformdata(`splash/${editid}`, formData);
+                toast.success("splash update successfully!");
+                if (response && response.error == 0) {
+                    // Only update the UI if the API succeeds
+                    setData((prevData) =>
+                        prevData.map((item) =>
+                            item._id === editid ? { ...item, ...response.data } : item
+                        )
+                    );
+                    settitle('');
+                    setposition('');
+                    setimage(null);
+                }
+            } catch (error) {
+                console.error('Error submitting:', error);
+                alert("Failed to submit. Please try again.");
             }
-        } catch (error) {
-            console.error('Error submitting:', error);
-            alert("Failed to submit. Please try again.");
+        } else {
+            try {
+                const response = await Postwithformdata('splash', formData);
+                toast.success("splash add successfully!");
+                if (response && response.error == 0) {
+                    // Only update the UI if the API succeeds
+                    setData((prevData) => [...prevData, response.data]);
+                    settitle('');
+                    setposition('');
+                    setimage(null);
+                }
+            } catch (error) {
+                console.error('Error submitting:', error);
+                alert("Failed to submit. Please try again.");
+            }
         }
+
+
     };
     const fetchSplash = async () => {
         try {
@@ -55,6 +78,17 @@ const Splash = () => {
     useEffect(() => {
         startTransition(fetchSplash);
     }, []);
+    const handledit = (id) => {
+        seteditid(id);
+        const found = data.find(item => item._id == id);
+        if (found) {
+            settitle(found.title);
+            setposition(found.position);
+            setimage(found.image);
+        } else {
+            console.error("Item not found");
+        }
+    }
     const handleDelete = async (id) => {
         if (confirm('Are you sure you want to delete?')) {
             try {
@@ -109,7 +143,7 @@ const Splash = () => {
                                     type="file"
                                     onChange={handlefile}
                                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
-                                    required
+
                                 />
                             </div>
                             <div className="col-span-1 mt-6">
@@ -140,7 +174,7 @@ const Splash = () => {
                                         <td>
                                             <div className="flex gap-3 item-center">
                                                 <button className="p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white">
-                                                    <FaEdit />
+                                                    <FaEdit onClick={() => handledit(item._id)} />
                                                 </button>
                                                 <button
                                                     className="p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
