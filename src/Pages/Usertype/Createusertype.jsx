@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useTransition, useOptimistic } from "react";
 import Topnav from "../../Component/Topnav";
-import { baseUrl } from "../../Api/Baseurl";
+// import { baseUrl } from "../../Api/Baseurl";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { postwithheader, putWithoutHeader,getwithheader } from "../../Api/Api";
+import { postwithheader, putWithoutHeader, getwithheader } from "../../Api/Api";
 import { toast } from "react-toastify";
 
 const CreateUserType = () => {
@@ -19,7 +19,7 @@ const CreateUserType = () => {
   const handleGet = async () => {
     setLoading(true);
     try {
-      const result = await getwithheader("user_type" , token);
+      const result = await getwithheader("user_type", token);
       if (result?.data) {
         setData(result.data);
         startTransition(() => setOptimisticData(result.data))
@@ -54,7 +54,6 @@ const CreateUserType = () => {
       } else {
         response = await postwithheader("user_type", obj);
         toast.success("usertype add successfully!");
-
       }
 
       if (response.error == 0) {

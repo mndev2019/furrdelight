@@ -26,14 +26,12 @@ const PetCategory = () => {
     const handlesubmit = async (e) => {
         e.preventDefault();
         if (!name || !image || !bgcolor) return;
-
         const formData = new FormData();
         formData.append('title', name);
         formData.append('image', image);
         formData.append('bg_color', bgcolor);
         formData.append('detail', detail);
         formData.append('pet_type', pet_type);
-
         if (editid) {
             try {
                 const response = await putwithformdata(`update_category/${editid}`, formData, token);
@@ -51,7 +49,7 @@ const PetCategory = () => {
                     setimage(null);
                     fetchcategory();
 
-                }else{
+                } else {
                     toast.error(response.message || "Failed to update pet category")
                 }
             } catch (error) {
@@ -61,7 +59,6 @@ const PetCategory = () => {
         } else {
             try {
                 const response = await Postwithformdata('category', formData, token);
-               
                 if (response && response.error == 0) {
                     // Only update the UI if the API succeeds
                     toast.success("pet category add successfully!");
@@ -72,7 +69,7 @@ const PetCategory = () => {
                     setpet_type('');
                     setimage(null);
                     fetchcategory();
-                }else{
+                } else {
                     toast.error(response.message || "Failed to add pet category")
                 }
             } catch (error) {

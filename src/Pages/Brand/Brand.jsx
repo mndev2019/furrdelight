@@ -1,4 +1,4 @@
-'use client';
+
 
 import React, { useEffect, useState, useTransition } from 'react';
 import Topnav from '../../Component/Topnav';

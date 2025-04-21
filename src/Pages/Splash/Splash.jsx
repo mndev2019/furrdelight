@@ -30,9 +30,9 @@ const Splash = () => {
         if (editid) {
             try {
                 const response = await putwithformdata(`splash/${editid}`, formData);
-                toast.success("splash update successfully!");
                 if (response && response.error == 0) {
                     // Only update the UI if the API succeeds
+                    toast.success("splash update successfully!");
                     setData((prevData) =>
                         prevData.map((item) =>
                             item._id === editid ? { ...item, ...response.data } : item
@@ -41,6 +41,8 @@ const Splash = () => {
                     settitle('');
                     setposition('');
                     setimage(null);
+                } else {
+                    toast.error(response.message)
                 }
             } catch (error) {
                 console.error('Error submitting:', error);
@@ -49,13 +51,15 @@ const Splash = () => {
         } else {
             try {
                 const response = await Postwithformdata('splash', formData);
-                toast.success("splash add successfully!");
                 if (response && response.error == 0) {
                     // Only update the UI if the API succeeds
+                    toast.success("splash add successfully!");
                     setData((prevData) => [...prevData, response.data]);
                     settitle('');
                     setposition('');
                     setimage(null);
+                } else {
+                    toast.error(response.message)
                 }
             } catch (error) {
                 console.error('Error submitting:', error);
@@ -89,15 +93,15 @@ const Splash = () => {
             console.error("Item not found");
         }
     }
-    const handleDelete = async (id) => {
+const handleDelete = async (id) => {
         if (confirm('Are you sure you want to delete?')) {
             try {
-
                 const response = await deleteapi(`delete_splash/${id}`);
                 if (response && response.error === 0) {
                     console.log("Deleted successfully", response);
                     fetchSplash();
                 } else {
+                    toast.error(response.message)
                     console.error("Error deleting:", response.message);
                     alert("Failed to delete. Please try again.");
                 }
@@ -178,7 +182,7 @@ const Splash = () => {
                                                 </button>
                                                 <button
                                                     className="p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
-                                                    onClick={() => handleDelete(item._id)}
+                                                    onclick={() => handleDelete(item._id)}
                                                 >
                                                     <MdDelete />
                                                 </button>

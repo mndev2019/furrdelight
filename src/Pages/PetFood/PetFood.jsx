@@ -56,7 +56,6 @@ const PetFood = () => {
                     setpet_type('');
                     setimage(null);
                     fetchcategory();
-
                 } else {
                     toast.error(response.message || "Failed to update pet category")
                 }

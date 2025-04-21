@@ -89,7 +89,7 @@ const Productlist = () => {
                                         </td>
                                         <td>
                                             <div className="flex gap-3 item-center">
-                                                <button className="p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white" >
+                                                <button className="p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white" onClick={() => navigate('/add-product' , {state: {... item}})}>
                                                     {/* onClick={() => handledit(item._id)} */}
                                                     <FaEdit />
                                                 </button>

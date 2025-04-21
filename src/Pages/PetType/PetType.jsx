@@ -6,12 +6,12 @@ import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import Loader from '../../Component/Loader';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 
 const PetType = () => {
     const token = localStorage.getItem("token")
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [name, setname] = useState("");
     const [image, setimage] = useState("");
     const [data, setData] = useState([]);
@@ -24,7 +24,6 @@ const PetType = () => {
     const handlesubmit = async (e) => {
         e.preventDefault();
         if (!name || !image) return;
-
         const formData = new FormData();
         formData.append('name', name);
         formData.append('image', image);
@@ -32,7 +31,7 @@ const PetType = () => {
         if (editid) {
             try {
                 const response = await putwithformdata(`pet_type_update/${editid}`, formData, token);
-                 setData((prevData) =>
+                setData((prevData) =>
                     prevData.map((item) =>
                         item._id === editid ? response.data : item
                     )
@@ -41,8 +40,7 @@ const PetType = () => {
                     toast.success("pet type update successfully!");
                     setname('');
                     setimage(null);
-
-                }else{
+                } else {
                     toast.error(response.message || "Failed to update pet type ")
                 }
             } catch (error) {
@@ -59,7 +57,7 @@ const PetType = () => {
                     setname('');
                     setimage(null);
                     fetchpetype();
-                }else{
+                } else {
                     toast.error(response.message || "Failed to add pet type ")
                 }
             } catch (error) {
@@ -67,7 +65,6 @@ const PetType = () => {
                 alert("Failed to submit. Please try again.");
             }
         }
-
     };
     const fetchpetype = async () => {
         try {
@@ -81,8 +78,6 @@ const PetType = () => {
     const handledit = (id) => {
         seteditid(id);
         const found = data.find(item => item._id == id);
-
-
         if (found) {
             setname(found.name);
             setimage(found.image);
@@ -157,7 +152,7 @@ const PetType = () => {
                                     <th>Name</th>
                                     <th>Image</th>
                                     <th>Action</th>
-                                    <th>Breed</th>
+                                    {/* <th>Breed</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -181,11 +176,11 @@ const PetType = () => {
                                                 </button>
                                             </div>
                                         </td>
-                                        <td>
+                                        {/* <td>
                                             <button onClick={() => navigate('/pet-breed')} type="submit" className="py-2 px-4 rounded text-white bg-[#001B48]">
                                                 Breed
                                             </button>
-                                        </td>
+                                        </td> */}
                                     </tr>
                                 ))}
                             </tbody>

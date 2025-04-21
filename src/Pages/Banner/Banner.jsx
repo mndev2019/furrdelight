@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect, useState, useTransition } from 'react';
 import Topnav from '../../Component/Topnav';
 import { deleteapi, getWithoutHeader, Postwithformdata, putwithformdata } from '../../Api/Api';
@@ -24,16 +22,15 @@ const Banner = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!title || !image) return;
-
         const formData = new FormData();
         formData.append('title', title);
         formData.append('image', image);
         if (editid) {
             try {
                 const response = await putwithformdata(`banner_update/${editid}`, formData);
-                toast.success("banner update successfully!");
                 if (response && response.error == 0) {
                     // Only update the UI if the API succeeds
+                    toast.success("banner update successfully!");
                     setData((prevData) =>
                         prevData.map((item) =>
                             item._id === editid ? { ...item, ...response.data } : item
@@ -41,6 +38,8 @@ const Banner = () => {
                     );
                     setTitle('');
                     setImage(null);
+                } else {
+                    toast.error(response.message)
                 }
             } catch (error) {
                 console.error('Error submitting:', error);
@@ -50,13 +49,14 @@ const Banner = () => {
         } else {
             try {
                 const response = await Postwithformdata('create_banner', formData);
-                toast.success("banner add successfully!");
-
                 if (response && response.error == 0) {
                     // Only update the UI if the API succeeds
+                    toast.success("banner add successfully!");
                     setData((prevData) => [...prevData, response.data]);
                     setTitle('');
                     setImage(null);
+                } else {
+                    toast.error(response.message)
                 }
             } catch (error) {
                 console.error('Error submitting:', error);
@@ -64,11 +64,7 @@ const Banner = () => {
                 toast.error(`${error.message}`);
             }
         }
-
-
     };
-
-
     const fetchBanners = async () => {
         try {
             const response = await getWithoutHeader('banner');
@@ -92,6 +88,8 @@ const Banner = () => {
         }
     }
 
+
+
     const handleDelete = async (id) => {
         try {
             await deleteapi(`banner_delete/${id}`);
@@ -101,6 +99,7 @@ const Banner = () => {
             console.error('Error deleting:', error);
         }
     };
+
 
     return (
         <>

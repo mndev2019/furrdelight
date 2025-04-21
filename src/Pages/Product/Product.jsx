@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Topnav from '../../Component/Topnav'
-import { getwithheader, Postwithformdata } from '../../Api/Api';
+import { deleteapi, getwithheader, Postwithformdata, putwithformdata } from '../../Api/Api';
 
-import Loader from '../../Component/Loader';
+// import Loader from '../../Component/Loader';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { baseUrl } from '../../Api/Baseurl';
 const Product = () => {
+    const { state } = useLocation();
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [branddata, setbranddata] = useState([]);
@@ -26,6 +28,8 @@ const Product = () => {
     const [brand, setbrand] = useState("");
     const [weight, setweight] = useState("");
     const [image, setimage] = useState("");
+    const [editimage, seteditimage] = useState();
+    const [editid, seteditid] = useState("");
 
     const handleimage = (e) => {
         e.preventDefault();
@@ -54,22 +58,66 @@ const Product = () => {
             image.forEach((img) => {
                 formData.append(`image`, img);
             });
-        }
-        try {
-            const res = await Postwithformdata('product', formData, token);
-            if (res.status === "OK" && res.error === 0) {
-                toast.success("Product added successfully!");
-                navigate('/product-list');
-            } else {
-                toast.error(res.message || "Failed to add product.");
-            }
+        } if (editid) {
+            try {
+                const res = await putwithformdata(`update_product/${editid}`, formData, token);
+                if (res.status === "OK" && res.error === 0) {
+                    toast.success("Product added successfully!");
+                    navigate('/product-list');
+                } else {
+                    toast.error(res.message || "Failed to add product.");
+                }
 
-        } catch (error) {
-            const errorMsg = error?.response?.data?.message || "Something went wrong";
-            toast.error(errorMsg);
-            console.error('Error submitting:', error);
-            alert("Failed to submit. Please try again.");
+            } catch (error) {
+                const errorMsg = error?.response?.data?.message || "Something went wrong";
+                toast.error(errorMsg);
+                console.error('Error submitting:', error);
+                alert("Failed to submit. Please try again.");
+            }
+        } else {
+            try {
+                const res = await Postwithformdata('product', formData, token);
+                if (res.status === "OK" && res.error === 0) {
+                    toast.success("Product added successfully!");
+                    navigate('/product-list');
+                } else {
+                    toast.error(res.message || "Failed to add product.");
+                }
+
+            } catch (error) {
+                const errorMsg = error?.response?.data?.message || "Something went wrong";
+                toast.error(errorMsg);
+                console.error('Error submitting:', error);
+                alert("Failed to submit. Please try again.");
+            }
         }
+
+    };
+    useEffect(() => {
+        if (state && state._id) {
+            handleEdit();
+        }
+    }, [state]);
+    const handleEdit = () => {
+        settitle(state.title);
+        setprice(state.price);
+        setdiscount_price(state.discount_price);
+        setrating(state.rating);
+        setquantity(state.quantity);
+        setstock(state.stock);
+        setstock_status(state.stock_status);
+        setsku(state.sku);
+        setdescription(state.description);
+        setshort_description(state.short_description);
+        setunit(state.unit._id);
+        setshop_by_category(state.shop_by_category._id);
+        setbrand(state.brand._id);
+        setweight(state.weight);
+        if (state) {
+            seteditimage(state.image);
+        }
+
+        seteditid(state._id);
     };
 
     const fetchbrand = async () => {
@@ -105,6 +153,20 @@ const Product = () => {
         fetchshopcategory();
         fetchunit();
     }, []);
+    const handleRemoveimage = async (e, id) => {
+        e.preventDefault()
+        const res = await deleteapi(`delete-image/${id}`, token)
+        if (res.error == "0") {
+            toast.success(res.message)
+            window.location.reload();
+
+
+        } else {
+            toast.error("Image Not Deleted")
+        }
+    }
+
+
 
     return (
         <>
@@ -114,6 +176,7 @@ const Product = () => {
                 <div className="container">
                     <form onSubmit={handlesubmit}>
                         <div className="grid grid-cols-4 mt-3 gap-3 items-center">
+
                             <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">Title</label>
                                 <input
@@ -198,7 +261,7 @@ const Product = () => {
                                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
                                     required
                                 >
-                                    <option value="in_stock">select stock status</option>
+                                    <option value="">select stock status</option>
                                     <option value="in_stock">In stock</option>
                                     <option value="out_of_stock">Out of stock</option>
                                     <option value="pre_order">Pre order</option>
@@ -298,46 +361,36 @@ const Product = () => {
 
                             <div className="col-span-1 mt-6">
                                 <button type="submit" className="py-2 px-4 rounded text-white bg-[#001B48]" onClick={() => console.log("hello")}>
-                                    Submit
+                                    {editid ? "Update" : " Submit"}
                                 </button>
                             </div>
-                        </div>
-                    </form>
-                    {/* <div className="grid grid-cols-1 mt-3">
-                        <table className="w-full border-separate border-spacing-y-1">
-                            <thead>
-                                <tr className="*:text-start *:text-nowrap *:text-sm *:font-bold bg-[#FAFAFA] *:px-[1rem] *:py-[1rem] *:tracking-[0.5px] *:border-r *:border-gray-100">
-                                    <th>Name</th>
-                                    <th>Image</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {data.map((item) => (
-                                    <tr key={item._id} className="*:text-start *:text-[13px] *:font-[400] bg-[#FFFFFF] *:px-[1rem] *:py-[0.5rem] *:tracking-[0.5px] *:border-r *:text-nowrap *:border-gray-100">
-                                        <td>{item.name}</td>
-                                        <td>
-                                            <img src={`${baseUrl}${item.image}`} alt={item.title} className="h-10 w-10 rounded-full" />
-                                        </td>
 
-                                        <td>
-                                            <div className="flex gap-3 item-center">
-                                                <button className="p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white" onClick={() => handledit(item._id)}>
-                                                    <FaEdit />
-                                                </button>
-                                                <button
-                                                    className="p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
-                                                    onClick={() => handleDelete(item._id)}
-                                                >
-                                                    <MdDelete />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div> */}
+                        </div>
+
+
+                    </form>
+                    {
+                        editid && editimage?.length > 0 &&
+                        <div className="flex gap-3 mt-5 flex-wrap">
+                            {editimage.map((imageObj, index) => (
+                                <div key={index} className="relative w-[100px] h-[100px]">
+                                    <img
+                                        src={`${baseUrl}${imageObj.img}`}
+                                        className="w-full h-full object-cover rounded"
+                                        alt={`Product Image ${index + 1}`}
+                                    />
+                                    <button
+
+                                        className="absolute top-[-8px] right-[-8px] bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center shadow-md"
+                                        onClick={(e) => handleRemoveimage(e, imageObj._id)}
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    }
+
                 </div>
             </section>
         </>

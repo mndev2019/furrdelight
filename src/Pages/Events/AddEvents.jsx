@@ -120,7 +120,7 @@ const AddEvents = () => {
                 const formattedDate = moment(found.date).format("YYYY-MM-DD");
                 setdate(formattedDate);
             } else {
-                setdate(""); // fallback in case date is missing
+                setdate(""); 
             }
         } else {
             console.error('Item not found');
@@ -169,7 +169,6 @@ const AddEvents = () => {
                                     required
                                 />
                             </div>
-
                             <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">Upload Image</label>
                                 <input

@@ -50,10 +50,10 @@ const Unit = () => {
             let response;
             if (editId) {
                 response = await putWithoutHeader(`unit/${editId}`, obj);
-                toast.success("usertype update successfully!");
+                toast.success("unit update successfully!");
             } else {
                 response = await postwithheader("unit", obj);
-                toast.success("usertype add successfully!");
+                toast.success("unit add successfully!");
 
             }
 
@@ -80,10 +80,7 @@ const Unit = () => {
 
     const handleDelete = async (id) => {
         const previousData = optimisticData;
-
-
         setOptimisticData((prev) => prev.filter((itm) => itm._id !== id));
-
         try {
             await fetch(`${baseUrl}delete_unit/${id}`, { method: "DELETE" });
             startTransition(() => handleGet());
