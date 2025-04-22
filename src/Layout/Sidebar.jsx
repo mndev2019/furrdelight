@@ -121,6 +121,12 @@ const Sidebar = () => {
             // gap: "true"
         },
 
+        {
+            title: "Add Slot",
+            image: <BiAccessibility />,
+            path: "/addslot"
+            // gap: "true"
+        },
     ]
     return (
         <>
