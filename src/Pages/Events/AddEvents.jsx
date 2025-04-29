@@ -19,18 +19,16 @@ const AddEvents = () => {
     const [data, setData] = useState([]);
     const [isPending, startTransition] = useTransition();
     const [editid, seteditid] = useState("");
+    const [editimage, seteditimage] = useState("");
     const handleimage = (e) => {
         e.preventDefault();
-        const selectedFiles = e.target.files; // Get the FileList object
-        // Convert FileList to an array to handle multiple files
+        const selectedFiles = e.target.files;
         const filesArray = Array.from(selectedFiles);
-        // If you need to store the images in state
-        setimage(filesArray); // Assuming setImages is a state setter for an array
+        setimage(filesArray);
     };
     const handlesubmit = async (e) => {
         e.preventDefault();
         if (!title || !image || !location || !description || !short_description || !price || !date) return;
-
         const formData = new FormData();
         formData.append('title', title);
         formData.append('location', location);
@@ -41,7 +39,7 @@ const AddEvents = () => {
         // Append images to form data
         if (image && image.length > 0) {
             image.forEach((img) => {
-                formData.append(`image`, img); // Append each image
+                formData.append(`image`, img);
             });
         }
         if (editid) {
@@ -107,20 +105,19 @@ const AddEvents = () => {
     const handledit = (id) => {
         seteditid(id);
         const found = data.find(item => item._id == id);
-
-
         if (found) {
             settitle(found.title);
             setlocation(found.location);
             setdescription(found.description);
             setshort_description(found.short_description);
             setprice(found.price);
-            setimage(found.image);
+            // setimage(found.image);
+            seteditimage(found.image);
             if (found.date) {
                 const formattedDate = moment(found.date).format("YYYY-MM-DD");
                 setdate(formattedDate);
             } else {
-                setdate(""); 
+                setdate("");
             }
         } else {
             console.error('Item not found');
@@ -148,6 +145,16 @@ const AddEvents = () => {
             }
         }
     };
+    const handleRemoveimage = async (e, id) => {
+        e.preventDefault()
+        const res = await deleteapi(`delete-eventimage/${id}`, token)
+        if (res.error == "0") {
+            toast.success(res.message);
+            seteditimage("")
+        } else {
+            toast.error("Image Not Deleted")
+        }
+    }
 
     return (
         <>
@@ -236,11 +243,32 @@ const AddEvents = () => {
                             </div>
                             <div className="col-span-1 mt-6">
                                 <button type="submit" className="py-2 px-4 rounded text-white bg-[#001B48]" disabled={isPending}>
-                                    {isPending ? 'Processing...' : 'Submit'}
+                                    {editid ? "Update" : "Submit"}
                                 </button>
                             </div>
                         </div>
                     </form>
+                    {
+                        editid && editimage?.length > 0 &&
+                        <div className="flex gap-3 mt-5 flex-wrap">
+                            {editimage.map((imageObj, index) => (
+                                <div key={index} className="relative w-[100px] h-[100px]">
+                                    <img
+                                        src={`${baseUrl}${imageObj.img}`}
+                                        className="w-full h-full object-cover rounded"
+                                        alt={`Product Image ${index + 1}`}
+                                    />
+                                    <button
+
+                                        className="absolute top-[-8px] right-[-8px] bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center shadow-md"
+                                        onClick={(e) => handleRemoveimage(e, imageObj._id)}
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    }
                     <div className="grid grid-cols-1 mt-3">
                         <table className="w-full border-separate border-spacing-y-1">
                             <thead>

@@ -1,12 +1,9 @@
 import React, { useEffect, useState, useTransition, useOptimistic } from "react";
 import Topnav from "../../Component/Topnav";
-import { baseUrl } from "../../Api/Baseurl";
-import { MdDelete } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
 import { postwithheader, putWithoutHeader, getwithheader } from "../../Api/Api";
 import { toast } from "react-toastify";
 
-const Unit = () => {
+const AddPermission = () => {
     const token = localStorage.getItem("token")
     const [title, setTitle] = useState("");
     const [data, setData] = useState([]);
@@ -14,25 +11,37 @@ const Unit = () => {
     const [isPending, startTransition] = useTransition();
     const [optimisticData, setOptimisticData] = useOptimistic(data);
     const [loading, setLoading] = useState(false);
+    const [usertypedata, setusertypedata] = useState([]);
 
     // Fetch data
     const handleGet = async () => {
         setLoading(true);
         try {
-            const result = await getwithheader("unit", token);
+            const result = await getwithheader("module", token);
             if (result?.data) {
                 setData(result.data);
-                startTransition(() => setOptimisticData(result.data))
+                startTransition(() => setOptimisticData(result.data));
             }
         } catch (error) {
             console.error("Error fetching data:", error);
         } finally {
             setLoading(false);
+            
+        }
+    };
+    const fetchusertype = async () => {
+        try {
+            const response = await getwithheader('user_type', token);
+            setusertypedata(response.data || []);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            toast.error(`${error.message}`);
         }
     };
 
     useEffect(() => {
         handleGet();
+        fetchusertype();
     }, []);
 
     // Handle form submission
@@ -45,13 +54,14 @@ const Unit = () => {
         const tempData = { _id: tempId, title };
 
         startTransition(() => setOptimisticData((prev) => (editId ? prev.map(item => item._id === editId ? tempData : item) : [...prev, tempData])))
+
         try {
             let response;
             if (editId) {
-                response = await putWithoutHeader(`unit/${editId}`, obj);
+                response = await putWithoutHeader(`module/${editId}`, obj);
                 toast.success("unit update successfully!");
             } else {
-                response = await postwithheader("unit", obj);
+                response = await postwithheader("module", obj);
                 toast.success("unit add successfully!");
 
             }
@@ -68,27 +78,9 @@ const Unit = () => {
         }
     };
 
-    // Handle edit
-    const handleEdit = (id) => {
-        setEditId(id);
-        const found = data.find((itm) => itm._id === id);
-        if (found) {
-            setTitle(found.title);
-        }
-    };
 
-    const handleDelete = async (id) => {
-        const previousData = optimisticData;
-        setOptimisticData((prev) => prev.filter((itm) => itm._id !== id));
-        try {
-            await fetch(`${baseUrl}delete_unit/${id}`, { method: "DELETE" });
-            startTransition(() => handleGet());
-            toast.success("usertype delete successfully!");
-        } catch (error) {
-            console.error("Error deleting:", error);
-            startTransition(() => setOptimisticData(previousData))
-        }
-    };
+
+
 
     return (
         <>
@@ -98,7 +90,7 @@ const Unit = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="grid grid-cols-3 mt-3 gap-3 items-center">
                             <div className="col-span-1">
-                                <label className="block text-[#001B48] font-bold mb-2">Title</label>
+                                <label className="block text-[#001B48] font-bold mb-2">Name</label>
                                 <input
                                     type="text"
                                     value={title}
@@ -107,6 +99,20 @@ const Unit = () => {
                                     placeholder="Enter title"
                                     required
                                 />
+                            </div>
+                            <div className="col-span-1">
+                                <label className="block text-[#001B48] font-bold mb-2">User Type</label>
+                                <select
+                                    // value={pet_type}
+                                    // onChange={(e) => setpet_type(e.target.value)}
+                                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
+                                    required
+                                >
+                                    <option value="">Select a user type</option>
+                                    {usertypedata.map((itm) => (
+                                        <option value={itm._id} key={itm._id}>{itm.title}</option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="col-span-1 mt-6">
                                 <button
@@ -126,45 +132,11 @@ const Unit = () => {
                         </div>
                     )}
 
-                    {!loading && (
-                        <div className="grid grid-cols-1 mt-3">
-                            <table className="w-full border-separate border-spacing-y-1">
-                                <thead>
-                                    <tr className="*:text-start *:text-nowrap *:text-sm *:font-bold bg-[#FAFAFA] *:px-[1rem] *:py-[1rem] *:tracking-[0.5px] *:border-r *:border-gray-100 ">
-                                        <th>Title</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {optimisticData.map((itm) => (
-                                        <tr key={itm._id} className="*:text-start *:text-[13px] *:font-[400] bg-[#FFFFFF] *:px-[1rem] *:py-[0.5rem] *:tracking-[0.5px] *:border-r *:text-nowrap *:border-gray-100">
-                                            <td>{itm.title}</td>
-                                            <td>
-                                                <div className="flex gap-3 item-center">
-                                                    <button
-                                                        className="edit mt-[2px] p-2 rounded-sm shadow text-[20px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
-                                                        onClick={() => handleEdit(itm._id)}
-                                                    >
-                                                        <FaEdit />
-                                                    </button>
-                                                    <button
-                                                        className="edit mt-[2px] p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
-                                                        onClick={() => handleDelete(itm._id)}
-                                                    >
-                                                        <MdDelete />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
+
                 </div>
             </section>
         </>
     );
 };
 
-export default Unit;
+export default AddPermission;

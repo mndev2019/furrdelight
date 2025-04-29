@@ -7,7 +7,7 @@ const Topnav = () => {
     const navigate = useNavigate();
     return (
         <>
-            <nav className="w-full topbarNav bg-nav   bg-white  border-b-1 pb-2 shadow border-[#CBD5E1]">
+            <nav className="w-full topbarNav bg-nav  bg-white  border-b-1 pb-2 shadow border-[#CBD5E1]">
                 <div className="container mx-auto">
                     <div className="flex w-full navcontent  justify-between items-center">
                         <div className="px-5">

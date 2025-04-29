@@ -12,6 +12,8 @@ import { PiDogFill, PiUniteDuotone } from 'react-icons/pi';
 import { FaProductHunt } from 'react-icons/fa';
 import { CiCircleList } from 'react-icons/ci';
 import { BsFillCalendar3EventFill } from 'react-icons/bs';
+import { RiSoundModuleFill } from 'react-icons/ri';
+import { IoKeySharp } from 'react-icons/io5';
 
 const Sidebar = () => {
     const [open, setopen] = useState(true);
@@ -27,6 +29,24 @@ const Sidebar = () => {
             title: "User Type",
             image: <FaUsers />,
             path: "/"
+
+        },
+        {
+            title: "Module",
+            image: <RiSoundModuleFill />,
+            path: "/module"
+
+        },
+        {
+            title: "Add Default Permission",
+            image: <RiSoundModuleFill />,
+            path: "/add-defaultpermission"
+
+        },
+        {
+            title: "Default Permission",
+            image: <IoKeySharp />,
+            path: "/default-permission"
 
         },
         {

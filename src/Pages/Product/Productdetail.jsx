@@ -6,14 +6,16 @@ import { baseUrl } from '../../Api/Baseurl';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from 'react-slick';
+import { useParams } from 'react-router-dom';
 
 const Productdetail = () => {
+    const {id} = useParams();
     const token = localStorage.getItem("token");
     const [data, setdata] = useState([]);
 
     const fetchevents = async () => {
         try {
-            const response = await getwithheader('product', token);
+            const response = await getwithheader(`product/${id}`, token);
             setdata(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);

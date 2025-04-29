@@ -6,7 +6,7 @@ import { FaEdit } from "react-icons/fa";
 import { postwithheader, putWithoutHeader, getwithheader } from "../../Api/Api";
 import { toast } from "react-toastify";
 
-const Unit = () => {
+const Module = () => {
     const token = localStorage.getItem("token")
     const [title, setTitle] = useState("");
     const [data, setData] = useState([]);
@@ -19,7 +19,7 @@ const Unit = () => {
     const handleGet = async () => {
         setLoading(true);
         try {
-            const result = await getwithheader("unit", token);
+            const result = await getwithheader("module", token);
             if (result?.data) {
                 setData(result.data);
                 startTransition(() => setOptimisticData(result.data))
@@ -45,13 +45,14 @@ const Unit = () => {
         const tempData = { _id: tempId, title };
 
         startTransition(() => setOptimisticData((prev) => (editId ? prev.map(item => item._id === editId ? tempData : item) : [...prev, tempData])))
+
         try {
             let response;
             if (editId) {
-                response = await putWithoutHeader(`unit/${editId}`, obj);
+                response = await putWithoutHeader(`module/${editId}`, obj);
                 toast.success("unit update successfully!");
             } else {
-                response = await postwithheader("unit", obj);
+                response = await postwithheader("module", obj);
                 toast.success("unit add successfully!");
 
             }
@@ -167,4 +168,4 @@ const Unit = () => {
     );
 };
 
-export default Unit;
+export default Module;

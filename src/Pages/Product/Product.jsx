@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Topnav from '../../Component/Topnav'
 import { deleteapi, getwithheader, Postwithformdata, putwithformdata } from '../../Api/Api';
-
 // import Loader from '../../Component/Loader';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -28,7 +27,7 @@ const Product = () => {
     const [brand, setbrand] = useState("");
     const [weight, setweight] = useState("");
     const [image, setimage] = useState("");
-    const [editimage, seteditimage] = useState();
+    const [editimage, seteditimage] = useState("");
     const [editid, seteditid] = useState("");
 
     const handleimage = (e) => {
@@ -62,7 +61,7 @@ const Product = () => {
             try {
                 const res = await putwithformdata(`update_product/${editid}`, formData, token);
                 if (res.status === "OK" && res.error === 0) {
-                    toast.success("Product added successfully!");
+                    toast.success("Product update successfully!");
                     navigate('/product-list');
                 } else {
                     toast.error(res.message || "Failed to add product.");
@@ -115,6 +114,7 @@ const Product = () => {
         setweight(state.weight);
         if (state) {
             seteditimage(state.image);
+
         }
 
         seteditid(state._id);
@@ -157,20 +157,18 @@ const Product = () => {
         e.preventDefault()
         const res = await deleteapi(`delete-image/${id}`, token)
         if (res.error == "0") {
-            toast.success(res.message)
-            window.location.reload();
+            toast.success(res.message);
+            seteditimage("")
+
+            // window.location.reload();
 
 
         } else {
             toast.error("Image Not Deleted")
         }
     }
-
-
-
     return (
         <>
-
             <Topnav />
             <section>
                 <div className="container">
@@ -314,9 +312,7 @@ const Product = () => {
                                         <option value={itm._id} key={itm._id}>{itm.title}</option>
                                     ))}
                                 </select>
-
                             </div>
-
                             <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">Brand</label>
                                 <select
@@ -356,18 +352,12 @@ const Product = () => {
                                     required
                                 />
                             </div>
-
-
-
                             <div className="col-span-1 mt-6">
                                 <button type="submit" className="py-2 px-4 rounded text-white bg-[#001B48]" onClick={() => console.log("hello")}>
                                     {editid ? "Update" : " Submit"}
                                 </button>
                             </div>
-
                         </div>
-
-
                     </form>
                     {
                         editid && editimage?.length > 0 &&

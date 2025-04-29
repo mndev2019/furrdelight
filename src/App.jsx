@@ -21,6 +21,9 @@ import Productdetail from './Pages/Product/Productdetail'
 import PetFoodType from './Pages/PetFood/PetFoodType'
 import PetFood from './Pages/PetFood/PetFood'
 import PetActivity from './Pages/PetActivity'
+import Module from './Pages/RolesPermission/Module'
+import DefaultPermission from './Pages/RolesPermission/DefaultPermission'
+import AddPermission from './Pages/RolesPermission/AddPermission'
 
 function App() {
   const ThemeRoutes = createBrowserRouter(
@@ -28,6 +31,9 @@ function App() {
       <>
         <Route path='/' element={<Layout />}>
           <Route path='/' element={<Createusertype />} />
+          <Route path='/module' element={<Module />} />
+          <Route path='/default-permission' element={<DefaultPermission />} />
+          <Route path='/add-defaultpermission' element={<AddPermission />} />
           <Route path='/banner' element={<Banner />} />
           <Route path='/splash' element={<Splash />} />
           <Route path='/brand' element={<Brand />} />
@@ -40,15 +46,11 @@ function App() {
           <Route path='/unit' element={<Unit />} />
           <Route path='/add-product' element={<Product />} />
           <Route path='/product-list' element={<Productlist />} />
-          <Route path='/product-detail' element={<Productdetail />} />
+          <Route path='/product-detail/:id' element={<Productdetail />} />
           <Route path='/add-event' element={<AddEvents />} />
           <Route path='/petfood-type' element={<PetFoodType />} />
           <Route path='/petfood' element={<PetFood />} />
           <Route path='/pet_activity' element={<PetActivity />} />
-
-
-
-
         </Route>
         <Route path='/login' element={<Login />}>
         </Route>
