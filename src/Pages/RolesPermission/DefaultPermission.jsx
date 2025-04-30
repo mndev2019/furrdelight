@@ -11,7 +11,7 @@ const DefaultPermission = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [data, setdata] = useState([]);
-    
+
     const fetchdefaultpermission = async () => {
         try {
             const response = await getwithheader('default-permission', token);
@@ -21,10 +21,10 @@ const DefaultPermission = () => {
             toast.error(`${error.message}`);
         }
     };
-   
+
     useEffect(() => {
         fetchdefaultpermission();
-       
+
     }, []);
     const handleDelete = async (id) => {
         if (confirm('Are you sure you want to delete?')) {

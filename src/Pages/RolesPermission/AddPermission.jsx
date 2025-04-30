@@ -26,7 +26,7 @@ const AddPermission = () => {
             console.error("Error fetching data:", error);
         } finally {
             setLoading(false);
-            
+
         }
     };
     const fetchusertype = async () => {
