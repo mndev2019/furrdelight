@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 const Module = () => {
     const token = localStorage.getItem("token")
-    const [title, setTitle] = useState("");
+    const [name, setname] = useState("");
     const [data, setData] = useState([]);
     const [editId, setEditId] = useState("");
     const [isPending, startTransition] = useTransition();
@@ -38,11 +38,11 @@ const Module = () => {
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const obj = { title };
+        const obj = { name };
 
         // Optimistic update for instant UI response
         const tempId = Date.now();
-        const tempData = { _id: tempId, title };
+        const tempData = { _id: tempId, name };
 
         startTransition(() => setOptimisticData((prev) => (editId ? prev.map(item => item._id === editId ? tempData : item) : [...prev, tempData])))
 
@@ -50,16 +50,16 @@ const Module = () => {
             let response;
             if (editId) {
                 response = await putWithoutHeader(`module/${editId}`, obj);
-                toast.success("unit update successfully!");
+                toast.success("module update successfully!");
             } else {
                 response = await postwithheader("module", obj);
-                toast.success("unit add successfully!");
+                toast.success("module add successfully!");
 
             }
 
             if (response.error == 0) {
                 startTransition(() => handleGet());
-                setTitle("");
+                setname("");
                 setEditId("");
             }
         } catch (error) {
@@ -74,7 +74,7 @@ const Module = () => {
         setEditId(id);
         const found = data.find((itm) => itm._id === id);
         if (found) {
-            setTitle(found.title);
+            setname(found.name);
         }
     };
 
@@ -82,9 +82,9 @@ const Module = () => {
         const previousData = optimisticData;
         setOptimisticData((prev) => prev.filter((itm) => itm._id !== id));
         try {
-            await fetch(`${baseUrl}delete_unit/${id}`, { method: "DELETE" });
+            await fetch(`${baseUrl}delete-module/${id}`, { method: "DELETE" });
             startTransition(() => handleGet());
-            toast.success("usertype delete successfully!");
+            toast.success("module delete successfully!");
         } catch (error) {
             console.error("Error deleting:", error);
             startTransition(() => setOptimisticData(previousData))
@@ -102,8 +102,8 @@ const Module = () => {
                                 <label className="block text-[#001B48] font-bold mb-2">Title</label>
                                 <input
                                     type="text"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    value={name}
+                                    onChange={(e) => setname(e.target.value)}
                                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
                                     placeholder="Enter title"
                                     required
@@ -139,7 +139,7 @@ const Module = () => {
                                 <tbody>
                                     {optimisticData.map((itm) => (
                                         <tr key={itm._id} className="*:text-start *:text-[13px] *:font-[400] bg-[#FFFFFF] *:px-[1rem] *:py-[0.5rem] *:tracking-[0.5px] *:border-r *:text-nowrap *:border-gray-100">
-                                            <td>{itm.title}</td>
+                                            <td>{itm.name}</td>
                                             <td>
                                                 <div className="flex gap-3 item-center">
                                                     <button

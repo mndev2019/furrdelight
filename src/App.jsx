@@ -24,6 +24,7 @@ import PetActivity from './Pages/PetActivity'
 import Module from './Pages/RolesPermission/Module'
 import DefaultPermission from './Pages/RolesPermission/DefaultPermission'
 import AddPermission from './Pages/RolesPermission/AddPermission'
+import UserManagement from './Pages/Usertype/UserManagement'
 
 function App() {
   const ThemeRoutes = createBrowserRouter(
@@ -31,6 +32,7 @@ function App() {
       <>
         <Route path='/' element={<Layout />}>
           <Route path='/' element={<Createusertype />} />
+          <Route path='/user-management' element={<UserManagement />} />
           <Route path='/module' element={<Module />} />
           <Route path='/default-permission' element={<DefaultPermission />} />
           <Route path='/add-defaultpermission' element={<AddPermission />} />
@@ -51,10 +53,6 @@ function App() {
           <Route path='/petfood-type' element={<PetFoodType />} />
           <Route path='/petfood' element={<PetFood />} />
           <Route path='/pet_activity' element={<PetActivity />} />
-
-
-
-
         </Route>
         <Route path='/login' element={<Login />}>
         </Route>

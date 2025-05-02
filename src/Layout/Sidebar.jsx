@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import logo from '../assets/Image/logo.svg'
-
-import { FaUserPen, FaUsers } from 'react-icons/fa6';
+import { FaCheckToSlot, FaUserPen, FaUsers } from 'react-icons/fa6';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineAlignLeft, AiOutlineLogout } from 'react-icons/ai';
-import { MdOutlineCategory, MdOutlineFitScreen, MdOutlinePets } from 'react-icons/md';
+import { MdManageAccounts, MdOutlineCategory, MdOutlineFitScreen, MdOutlinePets, MdOutlinePlaylistAdd } from 'react-icons/md';
 import { TbCategoryPlus, TbLabelFilled } from 'react-icons/tb';
 import { BiAccessibility, BiFoodMenu, BiSolidCategoryAlt } from 'react-icons/bi';
 import { PiDogFill, PiUniteDuotone } from 'react-icons/pi';
@@ -13,11 +12,10 @@ import { FaProductHunt } from 'react-icons/fa';
 import { CiCircleList } from 'react-icons/ci';
 import { BsFillCalendar3EventFill } from 'react-icons/bs';
 import { RiSoundModuleFill } from 'react-icons/ri';
-import { IoKeySharp } from 'react-icons/io5';
+import { IoFastFood, IoKeySharp } from 'react-icons/io5';
 
 const Sidebar = () => {
     const [open, setopen] = useState(true);
-
     const location = useLocation();
     const navigate = useNavigate();
     const handleLogout = () => {
@@ -32,6 +30,12 @@ const Sidebar = () => {
 
         },
         {
+            title: "User Management",
+            image: <MdManageAccounts />,
+            path: "user-management"
+
+        },
+        {
             title: "Module",
             image: <RiSoundModuleFill />,
             path: "/module"
@@ -39,7 +43,7 @@ const Sidebar = () => {
         },
         {
             title: "Add Default Permission",
-            image: <RiSoundModuleFill />,
+            image: <MdOutlinePlaylistAdd />,
             path: "/add-defaultpermission"
 
         },
@@ -129,7 +133,7 @@ const Sidebar = () => {
         },
         {
             title: "Pet Food",
-            image: <BiFoodMenu />,
+            image: <IoFastFood />,
             path: "/petfood"
             // gap: "true"
         },
@@ -143,7 +147,7 @@ const Sidebar = () => {
 
         {
             title: "Add Slot",
-            image: <BiAccessibility />,
+            image: <FaCheckToSlot />,
             path: "/addslot"
             // gap: "true"
         },
