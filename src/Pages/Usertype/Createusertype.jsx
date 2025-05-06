@@ -3,7 +3,7 @@ import Topnav from "../../Component/Topnav";
 // import { baseUrl } from "../../Api/Baseurl";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { postwithheader, putWithoutHeader, getwithheader } from "../../Api/Api";
+import { postwithheader, putWithJson, getwithheader } from "../../Api/Api";
 import { toast } from "react-toastify";
 
 const CreateUserType = () => {
@@ -49,7 +49,7 @@ const CreateUserType = () => {
     try {
       let response;
       if (editId) {
-        response = await putWithoutHeader(`user_type/${editId}`, obj);
+        response = await putWithJson(`user_type/${editId}`, obj);
         toast.success("usertype update successfully!");
       } else {
         response = await postwithheader("user_type", obj);

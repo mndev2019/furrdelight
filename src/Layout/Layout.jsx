@@ -21,7 +21,7 @@ const Layout = () => {
                 <div className="bg-transparent transition-all duration-300 flex-shrink-0 sticky top-0">
                     <Sidebar />
                 </div>
-                <div className="w-[85%] flex-grow overflow-auto h-screen">
+                <div className="w-[85%] flex-grow  h-screen">
                     <main className="p-5 pb-5">
                         <Outlet />
                     </main>

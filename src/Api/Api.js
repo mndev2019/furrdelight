@@ -19,7 +19,7 @@ export const postapiwithoutheader = async (endpoint, requestdata) => {
         return { error: 1, message: "Request failed" };
     }
 };
-export const Postwithformdata = async (endpoint, requestdata , token) => {
+export const Postwithformdata = async (endpoint, requestdata, token) => {
     try {
         const response = await fetch(`${baseUrl}${endpoint}`, {
             method: "POST",
@@ -126,12 +126,14 @@ export const putwithheader = async (endpoint, formdata, token) => {
 };
 
 // PUT API with out headers
-export const putWithoutHeader = async (endpoint, formdata) => {
+export const putWithJson = async (endpoint, formdata) => {
+    const token = localStorage.getItem("token")
     try {
         const response = await fetch(`${baseUrl}${endpoint}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(formdata),
         });

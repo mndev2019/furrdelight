@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Topnav from '../../Component/Topnav'
-import { deleteapi, getwithheader } from '../../Api/Api';
+import { deleteapi, getwithheader, putWithJson } from '../../Api/Api';
 
 import Loader from '../../Component/Loader';
 import { toast } from 'react-toastify';
 import { FaEdit, FaEye } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
+import SwitchToggle from '../../Component/SwitchToggle';
 const UserManagement = () => {
 
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ const UserManagement = () => {
     const [data, setdata] = useState([]);
     const fetchuser = async () => {
         try {
-            const response = await getwithheader('user', token);
+            const response = await getwithheader('users', token);
             setdata(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -27,7 +28,7 @@ const UserManagement = () => {
     const handleDelete = async (id) => {
         if (confirm('Are you sure you want to delete?')) {
             try {
-                const response = await deleteapi(`user_delete/soft/${id}`);
+                const response = await deleteapi(`delete_user/${id}`);
                 if (response && response.error === 0) {
                     toast.success(response.message);
                     fetchuser();
@@ -40,6 +41,27 @@ const UserManagement = () => {
             }
         }
     };
+
+    const updateVerification = async (status, id) => {
+
+        const requestdata = {
+            verification: !status
+        }
+        try {
+            const response = await putWithJson(`user_update/${id}`, requestdata);
+
+
+            if (response && response.error === 0) {
+                toast.success(response.message);
+                fetchuser();
+            } else {
+                console.error("Error deleting:", response.message);
+                alert("Failed to delete. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error deleting:", error);
+        }
+    }
 
     return (
         <>
@@ -55,6 +77,8 @@ const UserManagement = () => {
                                         Email
                                     </th>
                                     <th>Mobile</th>
+                                    <th>Verification</th>
+
                                     <th>View Detail</th>
                                     <th>Action</th>
                                 </tr>
@@ -62,17 +86,21 @@ const UserManagement = () => {
                             <tbody>
                                 {data.map((item) => (
                                     <tr key={item._id} className="*:text-start *:text-[13px] *:font-[400] bg-[#FFFFFF] *:px-[1rem] *:py-[0.5rem] *:tracking-[0.5px] *:border-r  *:border-gray-100">
-                                        <td>{item.title}</td>
+                                        <td>{item.username}</td>
                                         <td>
                                             {item.email}
                                         </td>
                                         <td>
-                                            {item.mobile}
+                                            {item.phone}
+                                        </td>
+                                        <td>
+                                            <SwitchToggle check={item?.verification} onClick={() => updateVerification(item.verification, item._id)} />
                                         </td>
                                         <td>
                                             <button
                                                 className="p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
-                                                onClick={() => navigate(`/product-detail/${item._id}`)}
+                                                onClick={() => navigate(`/add-defaultpermission/${item._id}`, { state: item })}
+
                                             >
                                                 <FaEye />
                                             </button>

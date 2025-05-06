@@ -10,9 +10,20 @@ import Topnav from '../../Component/Topnav';
 import Loader from '../../Component/Loader';
 
 function AddPermission() {
-    const { state } = useLocation();
+
     const { id } = useParams()
-    console.log(state)
+
+    const { state } = useLocation()
+
+
+
+
+
+
+
+    const [data, setdata] = useState([])
+
+
     const [name, setName] = useState("");
     const [phone, setphone] = useState("");
 
@@ -28,14 +39,22 @@ function AddPermission() {
     // const vendorpage = location.pathname == `/addpermission/${id}`
 
 
-
     const token = localStorage.getItem("token");
 
-    const handleEdit = () => {
-        setName(state?.name);
-        setusertype(state.usertype?._id ?? state.usertype);
-        setphone(state.phone)
-        const formattedRoles = state?.roles?.map(role => ({
+    const handleEdit = async () => {
+        let res = ""
+        if (id) {
+            res = await getwithheader(`single_user/${id}`, token);
+        }
+
+        let dataresult = id ? res.data : state
+        setdata(res.data)
+        setName(dataresult?.name);
+        setusertype(dataresult.user_type?._id ?? dataresult?.user_type);
+        setphone(dataresult?.phone)
+
+        console.log("muro", dataresult)
+        const formattedRoles = dataresult?.roles?.map(role => ({
             type: role?.type?._id,
             value: role.value
         }));
@@ -43,7 +62,7 @@ function AddPermission() {
 
 
         const rolesObject = moduledata?.reduce((acc, module) => {
-            const matchedRole = formattedRoles.find(role => role.type == module._id);
+            const matchedRole = formattedRoles?.find(role => role.type == module._id);
 
 
             if (matchedRole) {
@@ -55,6 +74,8 @@ function AddPermission() {
         }, {});
         setSelectedOptions(rolesObject);
     };
+
+    console.log(id)
     const handleGet = async () => {
         setLoading(true);
         let res = await getwithheader('user_type', token);
@@ -79,13 +100,13 @@ function AddPermission() {
     }, []);
 
     useEffect(() => {
-        if (state || id) {
+        if (id || state) {
             handleEdit()
         }
-    }, [state, moduledata, id])
+    }, [moduledata, id])
 
 
-    console.log(state)
+
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
@@ -100,23 +121,30 @@ function AddPermission() {
         const requestdata = {
             name: name,
             roles: formattedRoles,
-            ...(id ? {} : { user_type: usertype }) // Conditionally add usertype if id is not present
+            ...(id ? {} : { user_type: usertype })
         };
 
 
         let res = ""
-        if (state) {
+        // if (data) {
 
-            if (id) {
-                await putwithheader(`users/${state._id}`, requestdata, token)
+        //     if (id) {
+        //         await putwithheader(`user_update/${data._id}`, requestdata, token)
+        //     } else {
+        //         await putwithheader(`default-permission/${data._id}`, requestdata, token)
+        //     }
+        // } else {
+        //     
+        // }
 
-            } else {
-
-                await putwithheader(`default-permission/${state._id}`, requestdata, token)
-            }
+        if (id) {
+            await putwithheader(`user_update/${id}`, requestdata, token)
+        } else if (state) {
+            await putwithheader(`default-permission/${state._id}`, requestdata, token)
         } else {
             await postwithheader('default-permission', requestdata, token)
         }
+
 
         if (!res.error) {
 
@@ -215,7 +243,7 @@ function AddPermission() {
                                         type="submit"
                                         className="cursor-pointer w-full bg-[#001B48]  text-white font-semibold py-3 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
                                     >
-                                        {state ? "Update" : "Add"}
+                                        {id ? "Update" : "Add"}
                                     </button>
                                 </div>
                             </form>

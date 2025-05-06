@@ -32,7 +32,7 @@ const Sidebar = () => {
         {
             title: "User Management",
             image: <MdManageAccounts />,
-            path: "user-management"
+            path: "/user-management"
 
         },
         {

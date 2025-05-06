@@ -35,7 +35,11 @@ function App() {
           <Route path='/user-management' element={<UserManagement />} />
           <Route path='/module' element={<Module />} />
           <Route path='/default-permission' element={<DefaultPermission />} />
-          <Route path='/add-defaultpermission' element={<AddPermission />} />
+          <Route path='/add-defaultpermission/:id?' element={<AddPermission />} />
+
+
+
+
           <Route path='/banner' element={<Banner />} />
           <Route path='/splash' element={<Splash />} />
           <Route path='/brand' element={<Brand />} />

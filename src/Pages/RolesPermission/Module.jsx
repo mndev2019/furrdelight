@@ -3,7 +3,7 @@ import Topnav from "../../Component/Topnav";
 import { baseUrl } from "../../Api/Baseurl";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { postwithheader, putWithoutHeader, getwithheader } from "../../Api/Api";
+import { postwithheader, putWithJson, getwithheader } from "../../Api/Api";
 import { toast } from "react-toastify";
 
 const Module = () => {
@@ -49,7 +49,7 @@ const Module = () => {
         try {
             let response;
             if (editId) {
-                response = await putWithoutHeader(`module/${editId}`, obj);
+                response = await putWithJson(`module/${editId}`, obj);
                 toast.success("module update successfully!");
             } else {
                 response = await postwithheader("module", obj);
