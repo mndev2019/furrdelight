@@ -21,7 +21,7 @@ function AddPermission() {
 
 
 
-    const [data, setdata] = useState([])
+
 
 
     const [name, setName] = useState("");
@@ -48,7 +48,7 @@ function AddPermission() {
         }
 
         let dataresult = id ? res.data : state
-        setdata(res.data)
+
         setName(dataresult?.name);
         setusertype(dataresult.user_type?._id ?? dataresult?.user_type);
         setphone(dataresult?.phone)
