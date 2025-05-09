@@ -72,7 +72,7 @@ const PetFoodType = () => {
     };
     const fetchpetype = async () => {
         try {
-            const response = await getwithheader('petfood_type', token);
+            const response = await getwithheader('petfood_type');
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);

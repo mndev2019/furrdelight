@@ -8,12 +8,12 @@ import { toast } from 'react-toastify';
 
 
 const Profile = () => {
-    const token = localStorage.getItem("token")
+
     const [data, setData] = useState([])
 
     const fetchprofile = async () => {
         try {
-            const response = await getwithheader('profile', token);
+            const response = await getwithheader('profile');
             setData([response.data]);
         } catch (error) {
             console.error('Error fetching data:', error);

@@ -25,6 +25,8 @@ import Module from './Pages/RolesPermission/Module'
 import DefaultPermission from './Pages/RolesPermission/DefaultPermission'
 import AddPermission from './Pages/RolesPermission/AddPermission'
 import UserManagement from './Pages/Usertype/UserManagement'
+import ProductVariant from './Pages/ProductVariant'
+import ProductVariantlist from './Pages/ProductVariant/List'
 
 function App() {
   const ThemeRoutes = createBrowserRouter(
@@ -51,6 +53,9 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/unit' element={<Unit />} />
           <Route path='/add-product' element={<Product />} />
+          <Route path='/addproduct-variant/:id' element={<ProductVariant />} />
+          <Route path='/product_variantlist' element={<ProductVariantlist />} />
+
           <Route path='/product-list' element={<Productlist />} />
           <Route path='/product-detail/:id' element={<Productdetail />} />
           <Route path='/add-event' element={<AddEvents />} />

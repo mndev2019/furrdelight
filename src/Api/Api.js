@@ -57,11 +57,14 @@ export const postwithheader = async (endpoint, formdata, token) => {
 
 
 // GET API with headers
-export const getwithheader = async (endpoint, token) => {
+export const getwithheader = async (endpoint) => {
+    const token = localStorage.getItem("token")
+
     try {
         const response = await fetch(`${baseUrl}${endpoint}`, {
             method: "GET",
             headers: {
+                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
         });

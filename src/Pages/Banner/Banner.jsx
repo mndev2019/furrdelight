@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useTransition } from 'react';
 import Topnav from '../../Component/Topnav';
-import { deleteapi, getWithoutHeader, Postwithformdata, putwithformdata } from '../../Api/Api';
+import { deleteapi, getwithheader, Postwithformdata, putwithformdata } from '../../Api/Api';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import { baseUrl } from '../../Api/Baseurl';
@@ -67,7 +67,7 @@ const Banner = () => {
     };
     const fetchBanners = async () => {
         try {
-            const response = await getWithoutHeader('banner');
+            const response = await getwithheader('banner');
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);

@@ -68,7 +68,7 @@ const ShopCategory = () => {
                     setpet_category('');
                     setimage(null);
                     fetchshopbycategory();
-                }else{
+                } else {
                     toast.error(response.message || "Failed to add shop category")
                 }
             } catch (error) {
@@ -80,7 +80,7 @@ const ShopCategory = () => {
     };
     const fetchpetcategorydata = async () => {
         try {
-            const response = await getwithheader('category', token);
+            const response = await getwithheader('category');
             setpetcategorydata(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -89,7 +89,7 @@ const ShopCategory = () => {
     };
     const fetchshopbycategory = async () => {
         try {
-            const response = await getwithheader('shop_by_category', token);
+            const response = await getwithheader('shop_by_category');
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);

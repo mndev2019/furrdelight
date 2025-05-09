@@ -5,17 +5,17 @@ import { deleteapi, getwithheader } from '../../Api/Api';
 import Loader from '../../Component/Loader';
 import { toast } from 'react-toastify';
 import { baseUrl } from '../../Api/Baseurl';
-import { FaEdit, FaEye } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { FaEdit, FaEye, FaPlus } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 const Productlist = () => {
 
     const navigate = useNavigate();
-    const token = localStorage.getItem("token");
+
     const [data, setdata] = useState([]);
     const fetchevents = async () => {
         try {
-            const response = await getwithheader('product', token);
+            const response = await getwithheader('product');
             setdata(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -47,6 +47,13 @@ const Productlist = () => {
             <Topnav />
             <section>
                 <div className="container">
+                    <div className="grid grid-cols-1">
+                        <div className="text-end">
+                            <Link to={'/add-product'}>
+                                <button className='btn '>Add Product</button>
+                            </Link>
+                        </div>
+                    </div>
                     <div className="grid grid-cols-1 mt-3">
                         <table className="w-full border-separate border-spacing-y-1">
                             <thead>
@@ -57,6 +64,7 @@ const Productlist = () => {
                                     </th>
                                     <th>Quantity</th>
                                     <th>Price</th>
+                                    <th>Add Product Variant</th>
                                     <th>View Detail</th>
                                     <th>Action</th>
                                 </tr>
@@ -79,6 +87,14 @@ const Productlist = () => {
                                             {item.quantity}
                                         </td>
                                         <td>{item.price}</td>
+                                        <td>
+                                            <button
+                                                className="p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
+                                                onClick={() => navigate(`/addproduct-variant/${item._id}`)}
+                                            >
+                                                <FaPlus />
+                                            </button>
+                                        </td>
                                         <td>
                                             <button
                                                 className="p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"

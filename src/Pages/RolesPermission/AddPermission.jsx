@@ -44,7 +44,7 @@ function AddPermission() {
     const handleEdit = async () => {
         let res = ""
         if (id) {
-            res = await getwithheader(`single_user/${id}`, token);
+            res = await getwithheader(`single_user/${id}`);
         }
 
         let dataresult = id ? res.data : state
@@ -78,7 +78,7 @@ function AddPermission() {
     console.log(id)
     const handleGet = async () => {
         setLoading(true);
-        let res = await getwithheader('user_type', token);
+        let res = await getwithheader('user_type');
         if (!res.error) {
             setLoading(false);
             setUsertypedata(res.data);
@@ -87,7 +87,7 @@ function AddPermission() {
 
     const handleModule = async () => {
         setLoading(true);
-        let res = await getwithheader('module', token);
+        let res = await getwithheader('module');
         if (!res.error) {
             setLoading(false);
             setModuledata(res.data);

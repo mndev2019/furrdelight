@@ -81,7 +81,7 @@ const PetCategory = () => {
     };
     const fetchpettypedata = async () => {
         try {
-            const response = await getwithheader('pet_type', token);
+            const response = await getwithheader('pet_type');
             setpettypedata(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -90,7 +90,7 @@ const PetCategory = () => {
     };
     const fetchcategory = async () => {
         try {
-            const response = await getwithheader('category', token);
+            const response = await getwithheader('category');
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);

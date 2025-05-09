@@ -9,12 +9,12 @@ import { MdDelete } from 'react-icons/md';
 const DefaultPermission = () => {
 
     const navigate = useNavigate();
-    const token = localStorage.getItem("token");
+
     const [data, setdata] = useState([]);
 
     const fetchdefaultpermission = async () => {
         try {
-            const response = await getwithheader('default-permission', token);
+            const response = await getwithheader('default-permission');
             setdata(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);

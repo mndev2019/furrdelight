@@ -107,16 +107,17 @@ const Sidebar = () => {
             path: "/unit"
             // gap: "true"
         },
-        {
-            title: "Add Product",
-            image: <FaProductHunt />,
-            path: "/add-product"
-            // gap: "true"
-        },
+
         {
             title: "Product List",
             image: <CiCircleList />,
             path: "/product-list"
+            // gap: "true"
+        },
+        {
+            title: "Product Variant List",
+            image: <CiCircleList />,
+            path: "/product_variantlist"
             // gap: "true"
         },
         {

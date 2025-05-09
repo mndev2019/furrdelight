@@ -89,7 +89,7 @@ const PetFood = () => {
     };
     const fetchpetfoodtypedata = async () => {
         try {
-            const response = await getwithheader('petfood_type', token);
+            const response = await getwithheader('petfood_type');
             setpetfoodtypedata(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -98,7 +98,7 @@ const PetFood = () => {
     };
     const fetchpettypedata = async () => {
         try {
-            const response = await getwithheader('pet_type', token);
+            const response = await getwithheader('pet_type');
             setpettypedata(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -107,7 +107,7 @@ const PetFood = () => {
     };
     const fetchcategory = async () => {
         try {
-            const response = await getwithheader('pet_food', token);
+            const response = await getwithheader('pet_food');
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);

@@ -77,7 +77,7 @@ const AddSlot = () => {
     }
     const fetchpetype = async () => {
         try {
-            const response = await getwithheader('slots', token);
+            const response = await getwithheader('slots');
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);

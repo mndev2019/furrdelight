@@ -44,7 +44,7 @@ const PetBreed = () => {
                     setPetTypeId('');
                     fetchpetbreed();
 
-                }else{
+                } else {
                     toast.error(response.message || "Failed to update pet breed")
                 }
             } catch (error) {
@@ -54,7 +54,7 @@ const PetBreed = () => {
         } else {
             try {
                 const response = await Postwithformdata('pet_breeds', formData, token);
-                
+
                 if (response && response.error == 0) {
                     // Only update the UI if the API succeeds
                     toast.success("pet breed add successfully!");
@@ -63,7 +63,7 @@ const PetBreed = () => {
                     setimage(null);
                     setPetTypeId('');
                     fetchpetbreed();
-                }else{
+                } else {
                     toast.error(response.message || "Failed to add pet breed")
                 }
             } catch (error) {
@@ -75,7 +75,7 @@ const PetBreed = () => {
     };
     const fetchpettype = async () => {
         try {
-            const response = await getwithheader('pet_type', token);
+            const response = await getwithheader('pet_type');
             setpettypedata(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -84,7 +84,7 @@ const PetBreed = () => {
     };
     const fetchpetbreed = async () => {
         try {
-            const response = await getwithheader('pet_breeds', token);
+            const response = await getwithheader('pet_breeds');
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);

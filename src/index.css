@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+
+.btn {
+    @apply mt-4;
+    @apply px-4 py-2 bg-[#001B48] text-white rounded-md hover:bg-[#001B99];
+}

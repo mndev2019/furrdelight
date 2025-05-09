@@ -95,7 +95,7 @@ const AddEvents = () => {
 
     const fetchevents = async () => {
         try {
-            const response = await getwithheader('events', token);
+            const response = await getwithheader('events');
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);

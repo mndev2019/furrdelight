@@ -7,7 +7,7 @@ import { postwithheader, putWithJson, getwithheader } from "../../Api/Api";
 import { toast } from "react-toastify";
 
 const CreateUserType = () => {
-  const token = localStorage.getItem("token")
+
   const [title, setTitle] = useState("");
   const [data, setData] = useState([]);
   const [editId, setEditId] = useState("");
@@ -19,7 +19,7 @@ const CreateUserType = () => {
   const handleGet = async () => {
     setLoading(true);
     try {
-      const result = await getwithheader("user_type", token);
+      const result = await getwithheader("user_type");
       if (result?.data) {
         setData(result.data);
         startTransition(() => setOptimisticData(result.data))

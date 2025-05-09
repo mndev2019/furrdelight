@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useTransition } from 'react'
 import Topnav from '../../Component/Topnav'
-import { deleteapi, getWithoutHeader, Postwithformdata, putwithformdata } from '../../Api/Api';
+import { deleteapi, getwithheader, Postwithformdata, putwithformdata } from '../../Api/Api';
 import { baseUrl } from '../../Api/Baseurl';
 import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
@@ -71,7 +71,7 @@ const Splash = () => {
     };
     const fetchSplash = async () => {
         try {
-            const response = await getWithoutHeader('splash');
+            const response = await getwithheader('splash');
             setData(response.data || []);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -93,7 +93,7 @@ const Splash = () => {
             console.error("Item not found");
         }
     }
-const handleDelete = async (id) => {
+    const handleDelete = async (id) => {
         if (confirm('Are you sure you want to delete?')) {
             try {
                 const response = await deleteapi(`delete_splash/${id}`);
