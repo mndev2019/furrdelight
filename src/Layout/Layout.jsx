@@ -18,11 +18,11 @@ const Layout = () => {
     return (
         <>
             <div className="flex h-screen">
-                <div className="bg-transparent transition-all duration-300 flex-shrink-0 sticky top-0">
+                <div className="bg-transparent transition-all duration-300 flex-shrink-0 sticky top-0 overflow-y-auto overflow-x-hidden custom-scrollbar">
                     <Sidebar />
                 </div>
-                <div className="w-[85%] flex-grow  h-screen">
-                    <main className="p-5 pb-5">
+                <div className="w-[85%] flex-grow   h-full overflow-y-auto">
+                    <main className="p-5 pb-5 ">
                         <Outlet />
                     </main>
                 </div>

@@ -5,8 +5,6 @@ body {
     background-color: #DEF0FF;
 }
 
-
-
 /* From Uiverse.io by chicogale */
 .neo-toggle-container {
     --toggle-width: 80px;
@@ -15,7 +13,6 @@ body {
     --toggle-off-color: #475057;
     --toggle-on-color: #36f9c7;
     --toggle-transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-
     position: relative;
     display: inline-flex;
     flex-direction: column;
@@ -418,4 +415,25 @@ body {
 
 .neo-toggle-input:not(:checked)+.neo-toggle .neo-status-text::before {
     content: "STANDBY";
+}
+
+/* scrollbar */
+/* Custom horizontal scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
 }

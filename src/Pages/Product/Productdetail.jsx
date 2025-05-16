@@ -10,9 +10,7 @@ import { useParams } from 'react-router-dom';
 
 const Productdetail = () => {
     const { id } = useParams();
-
     const [data, setdata] = useState([]);
-
     const fetchevents = async () => {
         try {
             const response = await getwithheader(`product/${id}`);
@@ -27,7 +25,6 @@ const Productdetail = () => {
     useEffect(() => {
         fetchevents();
     }, []);
-
     const settings = {
         arrows: false,
         dots: true,
@@ -40,7 +37,7 @@ const Productdetail = () => {
     return (
         <>
             <Topnav />
-            <section className="pt-4 ">
+            <section className="pt-4">
                 <div
                     key={data?._id}
                     className="grid grid-cols-1 md:grid-cols-12 gap-6  bg-white rounded-xl shadow-lg p-6 mb-10"
@@ -66,7 +63,6 @@ const Productdetail = () => {
                             <h2 className="text-2xl font-bold text-gray-800 mb-2">{data?.title}</h2>
                             <p className="text-gray-600 mb-2">{data?.short_description}</p>
                             <p className="text-sm text-gray-500 mb-4">{data?.description}</p>
-
                             <div className="grid grid-cols-2 gap-4 text-sm">
                                 <p><span className="font-semibold">SKU:</span> {data?.sku}</p>
                                 <p><span className="font-semibold">Weight:</span> {data?.weight} kg</p>

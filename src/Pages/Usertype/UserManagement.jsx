@@ -9,9 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 import SwitchToggle from '../../Component/SwitchToggle';
 const UserManagement = () => {
-
     const navigate = useNavigate();
-
     const [data, setdata] = useState([]);
     const fetchuser = async () => {
         try {
@@ -41,16 +39,12 @@ const UserManagement = () => {
             }
         }
     };
-
     const updateVerification = async (status, id) => {
-
         const requestdata = {
             verification: !status
         }
         try {
             const response = await putWithJson(`user_update/${id}`, requestdata);
-
-
             if (response && response.error === 0) {
                 toast.success(response.message);
                 fetchuser();
@@ -73,12 +67,9 @@ const UserManagement = () => {
                             <thead>
                                 <tr className="*:text-start *:text-nowrap *:text-sm *:font-bold bg-[#FAFAFA] *:px-[1rem] *:py-[1rem] *:tracking-[0.5px] *:border-r *:border-gray-100">
                                     <th>Name</th>
-                                    <th>
-                                        Email
-                                    </th>
+                                    <th> Email</th>
                                     <th>Mobile</th>
                                     <th>Verification</th>
-
                                     <th>View Detail</th>
                                     <th>Action</th>
                                 </tr>

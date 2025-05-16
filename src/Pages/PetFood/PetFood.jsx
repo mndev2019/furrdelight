@@ -6,8 +6,6 @@ import { FaEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import Loader from '../../Component/Loader';
 import { toast } from 'react-toastify';
-
-
 const PetFood = () => {
     const token = localStorage.getItem("token");
     const [name, setname] = useState("");
@@ -16,10 +14,8 @@ const PetFood = () => {
     const [detail, setdetail] = useState("");
     const [pet_type, setpet_type] = useState('');
     const [petfood_type, setpetfood_type] = useState('');
-
     const [pettypedata, setpettypedata] = useState([]);
     const [petfoodtypedata, setpetfoodtypedata] = useState([]);
-
     const [data, setData] = useState([]);
     const [isPending, startTransition] = useTransition();
     const [editid, seteditid] = useState("");
@@ -30,7 +26,6 @@ const PetFood = () => {
     const handlesubmit = async (e) => {
         e.preventDefault();
         if (!name || !image || !bgcolor) return;
-
         const formData = new FormData();
         formData.append('name', name);
         formData.append('image', image);
@@ -38,8 +33,6 @@ const PetFood = () => {
         formData.append('detail', detail);
         formData.append('pet_type', pet_type);
         formData.append('pet_food_type', petfood_type);
-
-
         if (editid) {
             try {
                 const response = await putwithformdata(`update_petfood/${editid}`, formData, token);
@@ -123,8 +116,9 @@ const PetFood = () => {
             setname(found.name);
             setimage(found.image);
             setbgcolor(found.bg_color);
-            setpet_type(found.pet_type);
+            setpet_type(found.pet_type._id);
             setdetail(found.detail);
+            setpetfood_type(found.petfood_type._id)
 
         } else {
             console.error('Item not found');
@@ -164,7 +158,6 @@ const PetFood = () => {
                 <div className="container">
                     <form onSubmit={handlesubmit}>
                         <div className="grid grid-cols-4 mt-3 gap-3 items-center">
-
                             <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">Select Pet  Type</label>
                                 <select
@@ -233,7 +226,7 @@ const PetFood = () => {
                                     onChange={(e) => setdetail(e.target.value)}
                                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
                                     placeholder="Enter detail"
-                                    required
+
                                 />
                             </div>
                             <div className="col-span-1 mt-6">

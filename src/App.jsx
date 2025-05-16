@@ -27,6 +27,11 @@ import AddPermission from './Pages/RolesPermission/AddPermission'
 import UserManagement from './Pages/Usertype/UserManagement'
 import ProductVariant from './Pages/ProductVariant'
 import ProductVariantlist from './Pages/ProductVariant/List'
+import Question from './Pages/Questions'
+import AddSlot from './Pages/Slot/AddSlot'
+import Upcomingrecords from './Pages/Upcomingrecords'
+import Faq from './Pages/Faq/Faq'
+import Policy from './Pages/Policy/Policy'
 
 function App() {
   const ThemeRoutes = createBrowserRouter(
@@ -38,10 +43,6 @@ function App() {
           <Route path='/module' element={<Module />} />
           <Route path='/default-permission' element={<DefaultPermission />} />
           <Route path='/add-defaultpermission/:id?' element={<AddPermission />} />
-
-
-
-
           <Route path='/banner' element={<Banner />} />
           <Route path='/splash' element={<Splash />} />
           <Route path='/brand' element={<Brand />} />
@@ -55,13 +56,17 @@ function App() {
           <Route path='/add-product' element={<Product />} />
           <Route path='/addproduct-variant/:id' element={<ProductVariant />} />
           <Route path='/product_variantlist' element={<ProductVariantlist />} />
-
           <Route path='/product-list' element={<Productlist />} />
           <Route path='/product-detail/:id' element={<Productdetail />} />
           <Route path='/add-event' element={<AddEvents />} />
           <Route path='/petfood-type' element={<PetFoodType />} />
           <Route path='/petfood' element={<PetFood />} />
           <Route path='/pet_activity' element={<PetActivity />} />
+          <Route path='/question' element={<Question />} />
+          <Route path='/addslot' element={<AddSlot />} />
+          <Route path='/faq' element={<Faq/>}/>
+          <Route path='/policy' element={<Policy/>}/>
+          <Route path='/upcoming-records' element={<Upcomingrecords/>}/>
         </Route>
         <Route path='/login' element={<Login />}>
         </Route>

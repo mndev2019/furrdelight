@@ -23,16 +23,12 @@ function PetActivity() {
     }
     const handlesubmit = async (e) => {
         e.preventDefault();
-        if (!name || !image || !bgcolor) return;
-
+        // if (!name || !image || !bgcolor) return;
         const formData = new FormData();
         formData.append('name', name);
         formData.append('image', image);
         formData.append('bg_color', bgcolor);
         formData.append('detail', detail);
-
-
-
         if (editid) {
             try {
                 const response = await putwithformdata(`updatepet_activity/${editid}`, formData, token);
@@ -48,7 +44,6 @@ function PetActivity() {
                     setdetail('');
                     setimage(null);
                     fetchcategory();
-
                 } else {
                     toast.error(response.message || "Failed to update pet category")
                 }
@@ -144,7 +139,7 @@ function PetActivity() {
                                     onChange={(e) => setname(e.target.value)}
                                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
                                     placeholder="Enter title"
-                                    required
+
                                 />
                             </div>
 
@@ -165,7 +160,7 @@ function PetActivity() {
                                     onChange={(e) => setbgcolor(e.target.value)}
                                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
                                     placeholder="Enter background color"
-                                    required
+
                                 />
                             </div>
                             <div className="col-span-1">
@@ -176,7 +171,7 @@ function PetActivity() {
                                     onChange={(e) => setdetail(e.target.value)}
                                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
                                     placeholder="Enter detail"
-                                    required
+
                                 />
                             </div>
                             <div className="col-span-1 mt-6">

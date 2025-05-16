@@ -15,9 +15,6 @@ const AddSlot = () => {
     const [slot, setslot] = useState("");
     const [start_time, setstart_time] = useState("");
     const [end_time, setend_time] = useState("");
-
-
-
     const [data, setData] = useState([]);
     const [isPending, startTransition] = useTransition();
     const [editid, seteditid] = useState("");
@@ -102,7 +99,6 @@ const AddSlot = () => {
     const handleDelete = async (id) => {
         if (confirm('Are you sure you want to delete?')) {
             try {
-
                 const response = await deleteapi(`slots/${id}`);
                 if (response && response.error === 0) {
                     toast.success(response.message);
@@ -135,9 +131,6 @@ const AddSlot = () => {
                                     <option value="morning">Morning</option>
                                     <option value="afternoon">Afternoon</option>
                                     <option value="evening">evening</option>
-
-
-
                                 </select>
                             </div>
                             <div className="col-span-1">

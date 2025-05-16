@@ -4,7 +4,7 @@ import { deleteapi, getwithheader } from '../../Api/Api';
 import Loader from '../../Component/Loader';
 import { toast } from 'react-toastify';
 import { FaEdit, FaEye } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MdDelete } from 'react-icons/md';
 const DefaultPermission = () => {
 
@@ -48,6 +48,13 @@ const DefaultPermission = () => {
             <Topnav />
             <section>
                 <div className="container">
+                     <div className="grid grid-cols-1">
+                        <div className="text-end">
+                            <Link to={'/add-defaultpermission'}>
+                                <button className='btn '>Add Default Permission</button>
+                            </Link>
+                        </div>
+                    </div>
                     <div className="grid grid-cols-1 mt-3">
                         <table className="w-full border-separate border-spacing-y-1">
                             <thead>

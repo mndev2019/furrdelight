@@ -8,9 +8,7 @@ import { toast } from 'react-toastify';
 
 
 const Profile = () => {
-
     const [data, setData] = useState([])
-
     const fetchprofile = async () => {
         try {
             const response = await getwithheader('profile');
@@ -20,13 +18,9 @@ const Profile = () => {
             toast.error(`${error.message}`);
         }
     };
-
-
     useEffect(() => {
         fetchprofile();
     }, []);
-
-
     return (
         <>
             {/* {isPending && <Loader />} */}

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Topnav from '../../Component/Topnav'
 import { deleteapi, getwithheader } from '../../Api/Api';
-
 import Loader from '../../Component/Loader';
 import { toast } from 'react-toastify';
 import { baseUrl } from '../../Api/Baseurl';

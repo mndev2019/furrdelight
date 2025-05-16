@@ -5,31 +5,38 @@ import { deleteapi, getwithheader, Postwithformdata, putwithformdata } from '../
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { baseUrl } from '../../Api/Baseurl';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const Product = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const [branddata, setbranddata] = useState([]);
     const [shopcategorydata, setshopcategorydata] = useState([]);
-    const [unitdata, setunitdata] = useState([]);
+    // const [unitdata, setunitdata] = useState([]);
     const [title, settitle] = useState("");
     const [price, setprice] = useState("");
-    const [discount_price, setdiscount_price] = useState("");
+    // const [discount_price, setdiscount_price] = useState("");
     const [rating, setrating] = useState("");
     // const [quantity, setquantity] = useState("");
-    const [stock, setstock] = useState("");
+    // const [stock, setstock] = useState("");
     const [stock_status, setstock_status] = useState("");
     const [sku, setsku] = useState("");
     const [description, setdescription] = useState("");
     const [short_description, setshort_description] = useState("");
-    const [unit, setunit] = useState("");
+    // const [unit, setunit] = useState("");
     const [shop_by_category, setshop_by_category] = useState("");
     const [brand, setbrand] = useState("");
     const [weight, setweight] = useState("");
     const [image, setimage] = useState("");
     const [editimage, seteditimage] = useState("");
+    // const [warranty, setwarranty] = useState("");
+    const [return_policy, setreturn_policy] = useState("");
     const [editid, seteditid] = useState("");
-
+    const handlereturn_policy = (event, editor) => {
+        const data = editor.getData();
+        setreturn_policy(data);
+    };
     const handleimage = (e) => {
         e.preventDefault();
         const selectedFiles = e.target.files;
@@ -41,15 +48,17 @@ const Product = () => {
         const formData = new FormData();
         formData.append('title', title);
         formData.append('price', price);
-        formData.append('mrp', discount_price);
+        // formData.append('warranty', warranty);
+        formData.append('return_policy', return_policy);
+        // formData.append('mrp', discount_price);
         formData.append('rating', rating);
         // formData.append('quantity', quantity);
-        formData.append('stock', stock);
+        // formData.append('stock', stock);
         formData.append('stock_status', stock_status);
         formData.append('sku', sku);
         formData.append('description', description);
         formData.append('short_description', short_description);
-        formData.append('unit', unit);
+        // formData.append('unit', unit);
         formData.append('shop_by_category', shop_by_category);
         formData.append('brand', brand);
         formData.append('weight', weight);
@@ -100,18 +109,20 @@ const Product = () => {
     const handleEdit = () => {
         settitle(state.title);
         setprice(state.price);
-        setdiscount_price(state.discount_price);
+        // setdiscount_price(state.discount_price);
         setrating(state.rating);
         // setquantity(state.quantity);
-        setstock(state.stock);
+        // setstock(state.stock);
         setstock_status(state.stock_status);
         setsku(state.sku);
         setdescription(state.description);
         setshort_description(state.short_description);
-        setunit(state.unit._id);
+        // setunit(state.unit._id);
         setshop_by_category(state.shop_by_category._id);
         setbrand(state.brand._id);
         setweight(state.weight);
+        // setwarranty(state.warranty);
+        setreturn_policy(state.return_policy)
         if (state) {
             seteditimage(state.image);
 
@@ -138,20 +149,20 @@ const Product = () => {
             toast.error(`${error.message}`);
         }
     };
-    const fetchunit = async () => {
-        try {
-            const response = await getwithheader('unit');
-            setunitdata(response.data || []);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            toast.error(`${error.message}`);
-        }
-    };
+    // const fetchunit = async () => {
+    //     try {
+    //         const response = await getwithheader('unit');
+    //         setunitdata(response.data || []);
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //         toast.error(`${error.message}`);
+    //     }
+    // };
     useEffect(() => {
         fetchbrand();
         fetchshopcategory();
         fetchshopcategory();
-        fetchunit();
+        // fetchunit();
     }, []);
     const handleRemoveimage = async (e, id) => {
         e.preventDefault()
@@ -161,8 +172,6 @@ const Product = () => {
             seteditimage("")
 
             // window.location.reload();
-
-
         } else {
             toast.error("Image Not Deleted")
         }
@@ -196,7 +205,7 @@ const Product = () => {
 
                                 />
                             </div>
-                            <div className="col-span-1">
+                            {/* <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">MRP</label>
                                 <input
                                     type="text"
@@ -206,7 +215,7 @@ const Product = () => {
                                     placeholder="Enter discount price"
                                     required
                                 />
-                            </div>
+                            </div> */}
                             <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">Price</label>
                                 <input
@@ -218,6 +227,17 @@ const Product = () => {
                                     required
                                 />
                             </div>
+                            {/* <div className="col-span-1">
+                                <label className="block text-[#001B48] font-bold mb-2">Warranty</label>
+                                <input
+                                    type="text"
+                                    value={warranty}
+                                    onChange={(e) => setwarranty(e.target.value)}
+                                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]"
+                                    placeholder="Enter warranty"
+                                    required
+                                />
+                            </div> */}
                             <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">Rating</label>
                                 <input
@@ -242,7 +262,7 @@ const Product = () => {
                                 />
                             </div> */}
 
-                            <div className="col-span-1">
+                            {/* <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">Stock</label>
                                 <input
                                     type="text"
@@ -252,7 +272,7 @@ const Product = () => {
                                     placeholder="Enter stock"
                                     required
                                 />
-                            </div>
+                            </div> */}
                             <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">Stock Status</label>
                                 <select
@@ -301,7 +321,17 @@ const Product = () => {
                                     required
                                 />
                             </div>
-                            <div className="col-span-1">
+                            <div className="col-span-4">
+                                <div className="  ">
+                                    <label className="block text-[#001B48] font-bold mb-2">Return Policy</label>
+                                    <CKEditor
+                                        editor={ClassicEditor}
+                                        data={return_policy}
+                                        onChange={handlereturn_policy}
+                                    />
+                                </div>
+                            </div>
+                            {/* <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">Unit</label>
                                 <select
                                     value={unit}
@@ -314,7 +344,7 @@ const Product = () => {
                                         <option value={itm._id} key={itm._id}>{itm.title}</option>
                                     ))}
                                 </select>
-                            </div>
+                            </div> */}
                             <div className="col-span-1">
                                 <label className="block text-[#001B48] font-bold mb-2">Brand</label>
                                 <select

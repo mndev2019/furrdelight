@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import logo from '../assets/Image/logo.svg'
-import { FaCheckToSlot, FaUserPen, FaUsers } from 'react-icons/fa6';
+import { FaCheckToSlot, FaQuestion, FaUserPen, FaUsers } from 'react-icons/fa6';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineAlignLeft, AiOutlineLogout } from 'react-icons/ai';
-import { MdManageAccounts, MdOutlineCategory, MdOutlineFitScreen, MdOutlinePets, MdOutlinePlaylistAdd } from 'react-icons/md';
+import { MdManageAccounts, MdOutlineCategory, MdOutlineFitScreen, MdOutlinePets, MdOutlinePlaylistAdd, MdPolicy, MdUpcoming } from 'react-icons/md';
 import { TbCategoryPlus, TbLabelFilled } from 'react-icons/tb';
 import { BiAccessibility, BiFoodMenu, BiSolidCategoryAlt } from 'react-icons/bi';
 import { PiDogFill, PiUniteDuotone } from 'react-icons/pi';
 import { FaProductHunt } from 'react-icons/fa';
 import { CiCircleList } from 'react-icons/ci';
-import { BsFillCalendar3EventFill } from 'react-icons/bs';
+import { BsFillCalendar3EventFill, BsFillQuestionSquareFill } from 'react-icons/bs';
 import { RiSoundModuleFill } from 'react-icons/ri';
 import { IoFastFood, IoKeySharp } from 'react-icons/io5';
 
@@ -27,7 +27,6 @@ const Sidebar = () => {
             title: "User Type",
             image: <FaUsers />,
             path: "/"
-
         },
         {
             title: "User Management",
@@ -41,12 +40,12 @@ const Sidebar = () => {
             path: "/module"
 
         },
-        {
-            title: "Add Default Permission",
-            image: <MdOutlinePlaylistAdd />,
-            path: "/add-defaultpermission"
+        // {
+        //     title: "Add Default Permission",
+        //     image: <MdOutlinePlaylistAdd />,
+        //     path: "/add-defaultpermission"
 
-        },
+        // },
         {
             title: "Default Permission",
             image: <IoKeySharp />,
@@ -107,7 +106,6 @@ const Sidebar = () => {
             path: "/unit"
             // gap: "true"
         },
-
         {
             title: "Product List",
             image: <CiCircleList />,
@@ -145,11 +143,34 @@ const Sidebar = () => {
             path: "/pet_activity"
             // gap: "true"
         },
-
+        {
+            title: "Question",
+            image: <BsFillQuestionSquareFill />,
+            path: "/question"
+            // gap: "true"
+        },
+        {
+            title: "Upcoming Records",
+            image: <MdUpcoming />,
+            path: "/upcoming-records"
+            // gap: "true"
+        },
         {
             title: "Add Slot",
             image: <FaCheckToSlot />,
             path: "/addslot"
+            // gap: "true"
+        },
+        {
+            title: "Faq",
+            image: <FaQuestion />,
+            path: "/faq"
+            // gap: "true"
+        },
+          {
+            title: "Policy",
+            image: <MdPolicy/>,
+            path: "/policy"
             // gap: "true"
         },
     ]
@@ -158,7 +179,7 @@ const Sidebar = () => {
             <div className='flex'>
                 <div className={`${open ? "w-full" : "w-20"} duration-300 p-5 pt-8  bg-[#001B48] relative`}>
                     <div
-                        className={`h-[35px] w-[35px] bg-white rounded-full text-[20px] flex justify-center items-center border-2 border-[#001B48] absolute cursor-pointer -right-4 top-7 ${!open ? "rotate-180" : ""
+                        className={`h-[35px] w-[35px] bg-white rounded-full text-[20px] flex justify-center items-center border-2 border-[#001B48] absolute cursor-pointer top-[8px] right-[1px] ${!open ? "rotate-180" : ""
                             }`}
                         onClick={() => setopen(!open)}
                     >
