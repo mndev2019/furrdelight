@@ -36,7 +36,8 @@ export const Postwithformdata = async (endpoint, requestdata, token) => {
 };
 
 // POST API with headers
-export const postwithheader = async (endpoint, formdata, token) => {
+export const postwithheader = async (endpoint, formdata) => {
+    const token = localStorage.getItem("token")
     try {
         const response = await fetch(`${baseUrl}${endpoint}`, {
             method: "POST",
@@ -150,7 +151,8 @@ export const putWithJson = async (endpoint, formdata) => {
 };
 
 // DELETE API without data
-export const deleteapi = async (endpoint, token) => {
+export const deleteapi = async (endpoint) => {
+    let token = localStorage.getItem("token")
     try {
         const response = await fetch(`${baseUrl}${endpoint}`, {
             method: "DELETE",
