@@ -32,6 +32,7 @@ import AddSlot from './Pages/Slot/AddSlot'
 import Upcomingrecords from './Pages/Upcomingrecords'
 import Faq from './Pages/Faq/Faq'
 import Policy from './Pages/Policy/Policy'
+import PrescriptionCategory from './Pages/PrescriptionCategory'
 
 function App() {
   const ThemeRoutes = createBrowserRouter(
@@ -67,6 +68,7 @@ function App() {
           <Route path='/faq' element={<Faq/>}/>
           <Route path='/policy' element={<Policy/>}/>
           <Route path='/upcoming-records' element={<Upcomingrecords/>}/>
+          <Route path='/prescription-category' element={<PrescriptionCategory/>}/>
         </Route>
         <Route path='/login' element={<Login />}>
         </Route>

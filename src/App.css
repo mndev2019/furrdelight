@@ -437,3 +437,6 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
 }
+.gradientBg {
+  background: radial-gradient(circle at right bottom, white 84%, #DEF0FF);
+}
