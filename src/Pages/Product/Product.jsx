@@ -107,24 +107,24 @@ const Product = () => {
         }
     }, [state]);
     const handleEdit = () => {
-        settitle(state.title);
-        setprice(state.price);
+        settitle(state?.title || "");
+        setprice(state?.price || "");
         // setdiscount_price(state.discount_price);
-        setrating(state.rating);
+        setrating(state?.rating || "");
         // setquantity(state.quantity);
         // setstock(state.stock);
-        setstock_status(state.stock_status);
-        setsku(state.sku);
-        setdescription(state.description);
-        setshort_description(state.short_description);
+        setstock_status(state?.stock_status || "");
+        setsku(state?.sku || "");
+        setdescription(state?.description || "");
+        setshort_description(state?.short_description || "");
         // setunit(state.unit._id);
-        setshop_by_category(state.shop_by_category._id);
-        setbrand(state.brand._id);
-        setweight(state.weight);
+        setshop_by_category(state?.shop_by_category?._id || "");
+        setbrand(state?.brand?._id || "");
+        setweight(state?.weight || "");
         // setwarranty(state.warranty);
-        setreturn_policy(state.return_policy)
+        setreturn_policy(state.return_policy || "");
         if (state) {
-            seteditimage(state.image);
+            seteditimage(state.image || "");
 
         }
 
@@ -169,9 +169,8 @@ const Product = () => {
         const res = await deleteapi(`delete-image/${id}`, token)
         if (res.error == "0") {
             toast.success(res.message);
-            seteditimage("")
-
-            // window.location.reload();
+            seteditimage(prevImages => prevImages.filter(img => img._id !== id));
+       
         } else {
             toast.error("Image Not Deleted")
         }

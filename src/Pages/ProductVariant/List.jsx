@@ -65,7 +65,7 @@ const ProductVariantlist = () => {
                             </thead>
                             <tbody>
                                 {data.map((item) => (
-                                    <tr key={item._id} className="*:text-start *:text-[13px] *:font-[400] bg-[#FFFFFF] *:px-[1rem] *:py-[0.5rem] *:tracking-[0.5px] *:border-r  *:border-gray-100">
+                                    <tr key={item?._id} className="*:text-start *:text-[13px] *:font-[400] bg-[#FFFFFF] *:px-[1rem] *:py-[0.5rem] *:tracking-[0.5px] *:border-r  *:border-gray-100">
                                         <td>{item?.name}</td>
                                         <td className="flex gap-2">
                                             {item?.image?.map((imgObj, index) => (
@@ -95,7 +95,7 @@ const ProductVariantlist = () => {
                                         <td>
                                             <button
                                                 className="p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
-                                                onClick={() => navigate(`/product-detail/${item._id}`)}
+                                                onClick={() => navigate(`/product-detail/${item?._id}`)}
                                             >
                                                 <FaEye />
                                             </button>
@@ -108,7 +108,7 @@ const ProductVariantlist = () => {
                                                 </button>
                                                 <button
                                                     className="p-2 rounded-sm shadow text-[23px] text-[#001B48] hover:bg-[#001B48] hover:text-white"
-                                                    onClick={() => handleDelete(item._id)}
+                                                    onClick={() => handleDelete(item?._id)}
                                                 >
 
                                                     <MdDelete />
