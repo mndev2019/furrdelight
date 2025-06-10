@@ -173,9 +173,15 @@ const Sidebar = () => {
             path: "/prescription-category"
             // gap: "true"
         },
-          {
+        {
+            title: "Appointment Lists",
+            image: <PiPrescriptionBold />,
+            path: "/bookings"
+            // gap: "true"
+        },
+        {
             title: "Policy",
-            image: <MdPolicy/>,
+            image: <MdPolicy />,
             path: "/policy"
             // gap: "true"
         },

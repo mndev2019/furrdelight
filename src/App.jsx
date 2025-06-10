@@ -34,6 +34,10 @@ import Faq from './Pages/Faq/Faq'
 import Policy from './Pages/Policy/Policy'
 import PrescriptionCategory from './Pages/PrescriptionCategory'
 
+import Appointments from './Pages/bookings/Appointments'
+import ViewPrescriptions from './Pages/bookings/ViewPrescriptions'
+import PrintSingleCategoryPrescription from './Pages/bookings/PrintSingleCategoryPrescription'
+
 function App() {
   const ThemeRoutes = createBrowserRouter(
     createRoutesFromElements(
@@ -65,11 +69,14 @@ function App() {
           <Route path='/pet_activity' element={<PetActivity />} />
           <Route path='/question' element={<Question />} />
           <Route path='/addslot' element={<AddSlot />} />
-          <Route path='/faq' element={<Faq/>}/>
-          <Route path='/policy' element={<Policy/>}/>
-          <Route path='/upcoming-records' element={<Upcomingrecords/>}/>
-          <Route path='/prescription-category' element={<PrescriptionCategory/>}/>
+          <Route path='/faq' element={<Faq />} />
+          <Route path='/policy' element={<Policy />} />
+          <Route path='/upcoming-records' element={<Upcomingrecords />} />
+          <Route path='/prescription-category' element={<PrescriptionCategory />} />
+          <Route path='/bookings' element={<Appointments />} />
+          <Route path='/prescription/show/:id' element={<ViewPrescriptions />} />
         </Route>
+        <Route path='/prescription/print/:id/:print_only?' element={<PrintSingleCategoryPrescription />} />
         <Route path='/login' element={<Login />}>
         </Route>
       </>
