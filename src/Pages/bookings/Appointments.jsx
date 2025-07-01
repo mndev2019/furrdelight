@@ -30,7 +30,7 @@ const Appointments = () => {
     }, [page]);
     return (
         <>
-           <Topnav />
+            <Topnav />
             <section className='pt-4'>
                 <div className="container">
                     <div className="grid grid-cols-12">
@@ -39,9 +39,9 @@ const Appointments = () => {
                         </div> */}
                         <div className="col-span-12">
                             <div className="w-full">
-                                <table className="w-full">
+                                <table className="w-full border-separate border-spacing-y-1">
                                     <thead>
-                                        <tr className='*:text-xs *:text-start *:p-2 *:border *:border-gray-500'>
+                                        <tr className='*:text-start *:text-nowrap *:text-sm *:font-bold bg-[#FAFAFA] *:px-[1rem] *:py-[1rem] *:tracking-[0.5px] *:border-r *:border-gray-100'>
                                             <th>Sr No</th>
                                             <th>Doctor</th>
                                             <th>User</th>
@@ -57,7 +57,7 @@ const Appointments = () => {
                                         {
                                             bookings.map((itm, index) => (
                                                 <>
-                                                    <tr className='*:text-xs *:p-2 *:border *:border-gray-400'>
+                                                    <tr className='*:text-start *:text-[11px] *:font-[400] bg-[#FFFFFF] *:px-[1rem] *:py-[0.5rem] *:tracking-[0.5px] *:border-r  *:border-gray-100'>
                                                         <td>
                                                             {(page - 1) * 10 + index + 1}
                                                         </td>

@@ -51,18 +51,18 @@ const PrintSingleCategoryPrescription = () => {
     React.useEffect(() => {
         getcategoriesData();
     }, []);
-      const gotoback = () => {
+    const gotoback = () => {
         navigate(-1);
     }
     return (
         <>
             <section>
                 <div className="container">
-                    <div className="w-full text-end flex gap-4 justify-end">
+                    <div className="w-full text-end flex gap-4 justify-end mt-4">
                         <button type="submit" className="py-2 px-4 rounded text-white bg-[#001B48]" onClick={gotoback}>
                             Back
                         </button>
-                        <button onClick={handleDownloadPdf} className='bg-[var(--primary)] px-4 py-2 text-white text-xs'> Print</button>
+                        <button onClick={handleDownloadPdf} className='bg-[var(--primary)] px-4 py-2 text-black text-lg'> Print</button>
                     </div>
                 </div>
             </section>

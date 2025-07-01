@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 import logo from '../assets/Image/logo.svg'
-import { FaCheckToSlot, FaQuestion, FaUserPen, FaUsers } from 'react-icons/fa6';
+import { FaCheckToSlot, FaClipboardList, FaQuestion, FaUserPen, FaUsers } from 'react-icons/fa6';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineAlignLeft, AiOutlineLogout } from 'react-icons/ai';
 import { MdManageAccounts, MdOutlineCategory, MdOutlineFitScreen, MdOutlinePets, MdOutlinePlaylistAdd, MdPolicy, MdUpcoming } from 'react-icons/md';
-import { TbCategoryPlus, TbLabelFilled } from 'react-icons/tb';
+import { TbCategoryPlus, TbLabelFilled, TbReportAnalytics } from 'react-icons/tb';
 import { BiAccessibility, BiFoodMenu, BiSolidCategoryAlt } from 'react-icons/bi';
-import { PiDogFill, PiPrescriptionBold, PiUniteDuotone } from 'react-icons/pi';
+import { PiBank, PiDogFill, PiPrescriptionBold, PiUniteDuotone } from 'react-icons/pi';
 import { FaProductHunt } from 'react-icons/fa';
 import { CiCircleList } from 'react-icons/ci';
 import { BsFillCalendar3EventFill, BsFillQuestionSquareFill } from 'react-icons/bs';
@@ -175,8 +175,20 @@ const Sidebar = () => {
         },
         {
             title: "Appointment Lists",
-            image: <PiPrescriptionBold />,
+            image: <FaClipboardList />,
             path: "/bookings"
+            // gap: "true"
+        },
+        {
+            title: "Report",
+            image: <TbReportAnalytics />,
+            path: "/reports"
+            // gap: "true"
+        },
+        {
+            title: "Doctor Bank Account",
+            image: <PiBank />,
+            path: "/bank"
             // gap: "true"
         },
         {

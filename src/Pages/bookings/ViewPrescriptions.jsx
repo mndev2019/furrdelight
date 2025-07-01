@@ -43,7 +43,7 @@ const ViewPrescriptions = () => {
         getcategories();
         getpitems();
     }, [id]);
-       const gotoback = () => {
+    const gotoback = () => {
         navigate(-1);
     }
     return (
@@ -52,7 +52,7 @@ const ViewPrescriptions = () => {
                 <div className="container">
                     <div className="grid grid-cols-12 gap-4">
                         <div className="col-span-12 text-end">
-                            <Link to={'/prescription/print/' + id} className>Print</Link>
+                            <Link to={'/prescription/print/' + id} className = "me-5">Print</Link>
                             <button type="submit" className="py-2 px-4 rounded text-white bg-[#001B48]" onClick={gotoback}>
                                 Back
                             </button>
@@ -62,8 +62,8 @@ const ViewPrescriptions = () => {
                             <div className="w-full">
                                 <div className="grid grid-cols-4">
                                     <div className="w-full">
-                                        <label htmlFor="">Select Heading</label>
-                                        <select name="" id="" >
+                                        <label htmlFor="" className='block text-[#001B48] font-bold mb-2'>Select Heading</label>
+                                        <select name="" id="" className='w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#001B48]'>
                                             <option value="">Select</option>
                                             {
                                                 categories.map(itm => (

@@ -33,7 +33,9 @@ import Upcomingrecords from './Pages/Upcomingrecords'
 import Faq from './Pages/Faq/Faq'
 import Policy from './Pages/Policy/Policy'
 import PrescriptionCategory from './Pages/PrescriptionCategory'
-
+import TransactionReport from './Pages/transactions/TransactionReport'
+import BankDetails from './Pages/transactions/BankDetails'
+import BankTransaction from './Pages/transactions/BankTransaction'
 import Appointments from './Pages/bookings/Appointments'
 import ViewPrescriptions from './Pages/bookings/ViewPrescriptions'
 import PrintSingleCategoryPrescription from './Pages/bookings/PrintSingleCategoryPrescription'
@@ -75,6 +77,9 @@ function App() {
           <Route path='/prescription-category' element={<PrescriptionCategory />} />
           <Route path='/bookings' element={<Appointments />} />
           <Route path='/prescription/show/:id' element={<ViewPrescriptions />} />
+          <Route path='/reports' element={<TransactionReport />} />
+          <Route path='/bank' element={<BankDetails />} />
+          <Route path='/bank-transaction' element={<BankTransaction />} />
         </Route>
         <Route path='/prescription/print/:id/:print_only?' element={<PrintSingleCategoryPrescription />} />
         <Route path='/login' element={<Login />}>
