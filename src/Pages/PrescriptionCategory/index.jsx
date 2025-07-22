@@ -7,8 +7,9 @@ import React from 'react'
 // import { EditOutlined } from '@mui/icons-material';
 import axios from 'axios';
 import { baseUrl } from '../../Api/Baseurl';
-import { MdOutlineModeEdit } from 'react-icons/md';
+import { MdDelete, MdOutlineModeEdit } from 'react-icons/md';
 import { toast } from 'react-toastify';
+import { deleteapi, putWithJson } from '../../Api/Api';
 
 const PresciptionCategory = () => {
     const mtoken = localStorage.getItem("token");
@@ -100,6 +101,23 @@ const PresciptionCategory = () => {
     React.useEffect(() => {
         getitems();
     }, []);
+    const handledelete = async (id) => {
+        if (confirm('Are you sure you want to delete?')) {
+            try {
+                const response = await deleteapi(`prescription/category/delete/${id}`);
+                if (response && response.error === 0) {
+                    toast.success(response.message);
+                    getitems();
+                } else {
+                    toast.error(response.message);
+                    console.error("Error deleting:", response.message);
+                    alert("Failed to delete. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error deleting:", error);
+            }
+        }
+    };
     return (
         <>
             <section className="py-5">
@@ -177,6 +195,9 @@ const PresciptionCategory = () => {
                                         <div className="w-full rounded-lg  relative px-2 py-4 gradientBg shadow-md shadow-gray-400">
                                             <button onClick={() => handleEdit(itm._id)} className='absolute top-0 end-0 size-7 rounded-full inline-flex items-center justify-center bg-red-100 text-red-400'>
                                                 <MdOutlineModeEdit fontSize='small' />
+                                            </button>
+                                            <button onClick={() => handledelete(itm._id)} className='absolute top-0 end-9 size-7 rounded-full inline-flex items-center justify-center bg-red-100 text-red-400'>
+                                                <MdDelete fontSize='small' />
                                             </button>
                                             {itm.title}
                                         </div>

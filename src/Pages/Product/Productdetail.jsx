@@ -86,7 +86,8 @@ const Productdetail = () => {
                         </div>
                     </div>
 
-                    {/* Brand & Category Section */}
+                 
+                 
                     <div className="col-span-12 flex flex-col md:flex-row gap-6 mt-6">
                         {/* Brand */}
                         {data?.brand && (
