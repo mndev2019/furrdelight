@@ -7,6 +7,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { baseUrl } from '../../Api/Baseurl';
 import Topnav from '../../Component/Topnav';
+import Paginationbox from '../../Component/Paginationbox';
 
 const Appointments = () => {
     const [bookings, setBookings] = React.useState([]);
@@ -34,9 +35,9 @@ const Appointments = () => {
             <section className='pt-4'>
                 <div className="container">
                     <div className="grid grid-cols-12">
-                        {/* <div className="col-span-12 mb-4">
+                        <div className="col-span-12 mb-4">
                             <Paginationbox page={page} setPage={setPage} pagination={pagination} />
-                        </div> */}
+                        </div>
                         <div className="col-span-12">
                             <div className="w-full">
                                 <table className="w-full border-separate border-spacing-y-1">
